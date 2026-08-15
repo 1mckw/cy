@@ -72,12 +72,14 @@
 
   function tvSymbol(group, symbol, tvOverride) {
     if (tvOverride) return tvOverride;
+    if (group === "perp" || group === "crypto") return "BYBIT:" + symbol + ".P";
     if (group === "dji") return "NYSE:" + symbol;
     if (group === "ndx") return "NASDAQ:" + symbol;
     if (group === "index" && symbol === "DJI30") return "DJI";
     if (group === "index" && symbol === "NDX100") return "NASDAQ:NDX";
     if (group === "tpex") return "TPEX:" + symbol.replace(".TWO", "");
     if (symbol === "TXF1!" || symbol.endsWith("TXF1!")) return "TAIFEX:TXF1!";
+    if (symbol.endsWith("USDT")) return "BYBIT:" + symbol + ".P";
     return symbol;
   }
 
@@ -372,9 +374,10 @@
       }
 
       if (token !== openToken) return;
-      lwcEl.hidden = true;
-      frameEl.hidden = true;
-      showStatus("無法載入此商品圖表，請稍後再試");
+      hideStatus();
+      subEl.innerHTML =
+        `${escapeHtml(name)} · Bybit 備援 · TradingView ${escapeHtml(tvSymbol(group, symbol, tvOverride))}`;
+      renderTradingView(group, symbol, tf, tvOpts);
     } catch (err) {
       if (token !== openToken) return;
       lwcEl.hidden = true;
@@ -403,7 +406,7 @@
   closeBtn.addEventListener("click", closeModal);
 
   const CATALOG = window.SYMBOL_CATALOG || [];
-  const GROUP_LABEL = { index: "指數", dji: "DJI30", ndx: "NDX100", sp500: "SP500", twse: "上市", tpex: "上櫃" };
+  const GROUP_LABEL = { perp: "合約 TOP50", crypto: "合約 TOP50", index: "指數", dji: "DJI30", ndx: "NDX100", sp500: "SP500", twse: "上市", tpex: "上櫃" };
   const fab = document.getElementById("symbolFab");
   const searchOverlay = document.getElementById("symbolOverlay");
   const searchInput = document.getElementById("symbolSearch");

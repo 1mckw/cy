@@ -1,4 +1,4 @@
-name: Hourly US Alerts (DJI30 + NDX100)
+name: Hourly Crypto Alerts (Bybit TOP50)
 
 on:
   schedule:
@@ -10,7 +10,6 @@ on:
       - ".github/workflows/hourly-signals.yml"
       - "scan_signals.py"
       - "universe.py"
-      - "sp500_constituents.py"
       - "static/**"
       - "ardr.py"
       - "trendlines.py"
@@ -21,7 +20,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: hourly-us-alerts
+  group: hourly-crypto-alerts
   cancel-in-progress: true
 
 jobs:
@@ -40,7 +39,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Scan DJI30 + NDX100 universe
+      - name: Scan Bybit TOP50 contracts
         if: github.event_name != 'push'
         env:
           PYTHONUNBUFFERED: "1"
@@ -55,7 +54,7 @@ jobs:
             echo "No signal file changes"
             exit 0
           fi
-          git commit -m "chore: update US hourly touch alerts (DJI30 + NDX100)"
+          git commit -m "chore: update crypto hourly touch alerts (Bybit TOP50)"
           git pull --rebase origin main || true
           git push origin main
         env:
