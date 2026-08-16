@@ -7,7 +7,10 @@ import os
 import urllib.error
 import urllib.request
 
-BYBIT_TICKERS_URL = "https://api.bybit.com/v5/market/tickers?category=linear"
+BYBIT_HOSTS = (
+    "https://api.bybit.com",
+    "https://api.bytick.com",
+)
 TOP_N = 50
 UA = {"User-Agent": "Mozilla/5.0 (compatible; Crypto-Alerts/1.0)"}
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -76,6 +79,20 @@ def _http_get_json(url: str, timeout: int = 30) -> dict:
         return json.loads(resp.read().decode())
 
 
+def _bybit_tickers_payload() -> dict:
+    last_err: Exception | None = None
+    for host in BYBIT_HOSTS:
+        url = host + "/v5/market/tickers?category=linear"
+        try:
+            payload = _http_get_json(url)
+            if int(payload.get("retCode") or 0) != 0:
+                raise RuntimeError(str(payload.get("retMsg") or "Bybit tickers error"))
+            return payload
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, RuntimeError, json.JSONDecodeError) as exc:
+            last_err = exc
+    raise last_err  # type: ignore[misc]
+
+
 def _jobs_from_symbols(pairs: list[tuple[str, str]]) -> list[dict[str, str]]:
     jobs: list[dict[str, str]] = []
     for symbol, base in pairs[:TOP_N]:
@@ -110,9 +127,7 @@ def _save_cache(jobs: list[dict[str, str]]) -> None:
 def fetch_top_contracts(limit: int = TOP_N) -> list[dict[str, str]]:
     """Return top USDT linear perpetuals ranked by 24h turnover."""
     try:
-        payload = _http_get_json(BYBIT_TICKERS_URL)
-        if int(payload.get("retCode") or 0) != 0:
-            raise RuntimeError(str(payload.get("retMsg") or "Bybit tickers error"))
+        payload = _bybit_tickers_payload()
         rows = (payload.get("result") or {}).get("list") or []
         ranked: list[tuple[float, str, str]] = []
         for row in rows:

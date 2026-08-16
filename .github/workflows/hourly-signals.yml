@@ -41,7 +41,6 @@ jobs:
 
       - name: Scan Bybit TOP50 contracts
         if: github.event_name != 'push'
-        continue-on-error: true
         id: scan
         env:
           PYTHONUNBUFFERED: "1"

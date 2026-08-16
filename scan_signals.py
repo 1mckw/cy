@@ -23,6 +23,10 @@ STATIC_DIR = os.path.join(ROOT, "static")
 CHART_PACKS_PATH = os.path.join(OUT_DIR, "chart-packs.json")
 
 BYBIT_BASE = "https://api.bybit.com"
+BYBIT_HOSTS = (
+    "https://api.bybit.com",
+    "https://api.bytick.com",
+)
 
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
@@ -87,6 +91,21 @@ def http_get_json(url: str, timeout: int = 45) -> Any:
         return json.loads(resp.read().decode())
 
 
+def _bybit_get_json(path: str, params: dict[str, str | int], timeout: int = 45) -> Any:
+    query = urllib.parse.urlencode(params)
+    last_err: Exception | None = None
+    for host in BYBIT_HOSTS:
+        url = host + path + "?" + query
+        try:
+            payload = http_get_json(url, timeout=timeout)
+            if int(payload.get("retCode") or 0) != 0:
+                raise RuntimeError(str(payload.get("retMsg") or "Bybit API error"))
+            return payload
+        except Exception as exc:  # noqa: BLE001
+            last_err = exc
+    raise last_err  # type: ignore[misc]
+
+
 def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
     cfg = TIMEFRAMES[timeframe]
     interval = cfg["interval"]
@@ -104,8 +123,7 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
         }
         if end_ms is not None:
             params["end"] = end_ms
-        url = BYBIT_BASE + "/v5/market/kline?" + urllib.parse.urlencode(params)
-        payload = http_get_json(url)
+        payload = _bybit_get_json("/v5/market/kline", params)
         rows = (payload.get("result") or {}).get("list") or []
         if not rows:
             break
@@ -132,10 +150,14 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
         if len(rows) < limit:
             break
         end_ms = int(rows[-1][0]) - 1
+        if os.environ.get("GITHUB_ACTIONS"):
+            time.sleep(0.05)
 
     out.sort(key=lambda x: x["time"])
     if len(out) > want:
         out = out[-want:]
+    if not out:
+        raise RuntimeError(f"No Bybit kline data for {symbol} ({timeframe})")
     return out
 
 
@@ -740,6 +762,12 @@ def _main_impl() -> int:
     )
 
     ok = sum(1 for r in slim_results if not r.get("error"))
+    if ok == 0:
+        prev_html = os.path.join(OUT_DIR, "latest.html")
+        if os.environ.get("GITHUB_ACTIONS") and os.path.isfile(prev_html):
+            print("All scan jobs failed; keeping previous committed report", flush=True)
+            return 0
+
     generated_at = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     payload = {
         "generated_at": generated_at,
@@ -795,7 +823,9 @@ def _main_impl() -> int:
             print(f"  {e['symbol']} ({e['bybit_symbol']}): {e['error']}", flush=True)
 
     print(f"Hits: {len(hits)} · OK: {ok}/{len(jobs)}", flush=True)
-    return 0 if ok > 0 else 1
+    if ok == 0:
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
