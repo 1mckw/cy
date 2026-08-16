@@ -41,15 +41,17 @@ jobs:
 
       - name: Scan Bybit TOP50 contracts
         if: github.event_name != 'push'
+        continue-on-error: true
+        id: scan
         env:
           PYTHONUNBUFFERED: "1"
           PYTHONIOENCODING: utf-8
         run: python -u scan_signals.py
 
       - name: Commit signal report
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.scan.outcome == 'success'
         run: |
-          git add signals/latest.json signals/latest.html signals/index.html signals/chart-packs.json
+          git add signals/latest.json signals/latest.html signals/index.html signals/chart-packs.json signals/universe-cache.json
           if git diff --staged --quiet; then
             echo "No signal file changes"
             exit 0
@@ -64,7 +66,9 @@ jobs:
           GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Prepare Pages site
+        if: always()
         run: |
+          test -f signals/latest.html || { echo "Missing signals/latest.html"; exit 1; }
           mkdir -p _site
           cp signals/latest.html _site/index.html
           cp signals/latest.json _site/latest.json
@@ -72,11 +76,13 @@ jobs:
           touch _site/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3
+        if: always()
         with:
           path: _site
 
   deploy:
     needs: scan
+    if: always() && needs.scan.result != 'cancelled'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

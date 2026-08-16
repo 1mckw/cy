@@ -683,6 +683,14 @@ def render_html(payload: dict) -> str:
 
 
 def main() -> int:
+    try:
+        return _main_impl()
+    except Exception as exc:  # noqa: BLE001
+        print(f"Fatal scan error: {exc}", flush=True)
+        return 1
+
+
+def _main_impl() -> int:
     os.makedirs(OUT_DIR, exist_ok=True)
     base_jobs = build_scan_jobs()
     jobs: list[dict[str, str]] = []
@@ -697,7 +705,7 @@ def main() -> int:
     )
 
     results: list[dict] = []
-    workers = 12 if os.environ.get("GITHUB_ACTIONS") else 8
+    workers = 6 if os.environ.get("GITHUB_ACTIONS") else 8
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futs = {pool.submit(scan_job, j): j for j in jobs}
         done = 0

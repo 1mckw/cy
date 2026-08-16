@@ -35,6 +35,11 @@ GitHub Pages 每小時掃描 **Bybit USDT 永續合約 24h 交易額 TOP50**，�
 
 **趨勢線：** 至少 3 觸點；最多 2 條上升支撐 + 2 條下降阻力；觸點較少者圖上 50% 透明；急漲/跌貫穿 grace 2 根 K。
 
+## 首次部署 GitHub Pages
+
+Repo **Settings → Pages → Build and deployment → Source** 選 **GitHub Actions**。
+未啟用前 workflow 的 deploy 步驟會失敗，網站 `https://1mckw.github.io/cy/` 會 404。
+
 ## 手動觸發
 
 Repo → **Actions** → **Hourly Crypto Alerts (Bybit TOP50)** → **Run workflow**
