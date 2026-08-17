@@ -144,8 +144,10 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
             )
         batch.reverse()
         if out:
-            newest_batch = batch[-1]["time"]
-            out = [b for b in out if b["time"] > newest_batch]
+            oldest_existing = out[0]["time"]
+            batch = [b for b in batch if b["time"] < oldest_existing]
+            if not batch:
+                break
         out = batch + out
         if len(rows) < limit:
             break
@@ -234,9 +236,7 @@ def chart_pack_start_index(
         starts.append(int(best_touch_line["p1"]["index"]))
     if not starts:
         return tail
-    pivot = min(starts)
-    max_back = max(0, tail - chart_bars)
-    return max(max_back, min(tail, pivot))
+    return min(tail, min(starts))
 
 
 def build_chart_pack(

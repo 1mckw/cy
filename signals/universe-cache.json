@@ -20,27 +20,9 @@
     },
     {
       "group": "perp",
-      "bybit": "COWUSDT",
-      "symbol": "COWUSDT",
-      "name": "COW"
-    },
-    {
-      "group": "perp",
-      "bybit": "CYSUSDT",
-      "symbol": "CYSUSDT",
-      "name": "CYS"
-    },
-    {
-      "group": "perp",
-      "bybit": "ACEUSDT",
-      "symbol": "ACEUSDT",
-      "name": "ACE"
-    },
-    {
-      "group": "perp",
-      "bybit": "AKEUSDT",
-      "symbol": "AKEUSDT",
-      "name": "AKE"
+      "bybit": "XRPUSDT",
+      "symbol": "XRPUSDT",
+      "name": "XRP"
     },
     {
       "group": "perp",
@@ -50,33 +32,9 @@
     },
     {
       "group": "perp",
-      "bybit": "XRPUSDT",
-      "symbol": "XRPUSDT",
-      "name": "XRP"
-    },
-    {
-      "group": "perp",
-      "bybit": "HEMIUSDT",
-      "symbol": "HEMIUSDT",
-      "name": "HEMI"
-    },
-    {
-      "group": "perp",
-      "bybit": "BEATUSDT",
-      "symbol": "BEATUSDT",
-      "name": "BEAT"
-    },
-    {
-      "group": "perp",
-      "bybit": "HUSDT",
-      "symbol": "HUSDT",
-      "name": "H"
-    },
-    {
-      "group": "perp",
-      "bybit": "LINKUSDT",
-      "symbol": "LINKUSDT",
-      "name": "LINK"
+      "bybit": "PORTALUSDT",
+      "symbol": "PORTALUSDT",
+      "name": "PORTAL"
     },
     {
       "group": "perp",
@@ -86,141 +44,9 @@
     },
     {
       "group": "perp",
-      "bybit": "VELVETUSDT",
-      "symbol": "VELVETUSDT",
-      "name": "VELVET"
-    },
-    {
-      "group": "perp",
-      "bybit": "APRUSDT",
-      "symbol": "APRUSDT",
-      "name": "APR"
-    },
-    {
-      "group": "perp",
-      "bybit": "NVDAUSDT",
-      "symbol": "NVDAUSDT",
-      "name": "NVDA"
-    },
-    {
-      "group": "perp",
-      "bybit": "DOGEUSDT",
-      "symbol": "DOGEUSDT",
-      "name": "DOGE"
-    },
-    {
-      "group": "perp",
       "bybit": "ZECUSDT",
       "symbol": "ZECUSDT",
       "name": "ZEC"
-    },
-    {
-      "group": "perp",
-      "bybit": "ADAUSDT",
-      "symbol": "ADAUSDT",
-      "name": "ADA"
-    },
-    {
-      "group": "perp",
-      "bybit": "WALUSDT",
-      "symbol": "WALUSDT",
-      "name": "WAL"
-    },
-    {
-      "group": "perp",
-      "bybit": "MSFTUSDT",
-      "symbol": "MSFTUSDT",
-      "name": "MSFT"
-    },
-    {
-      "group": "perp",
-      "bybit": "WLDUSDT",
-      "symbol": "WLDUSDT",
-      "name": "WLD"
-    },
-    {
-      "group": "perp",
-      "bybit": "AVAXUSDT",
-      "symbol": "AVAXUSDT",
-      "name": "AVAX"
-    },
-    {
-      "group": "perp",
-      "bybit": "PUMPFUNUSDT",
-      "symbol": "PUMPFUNUSDT",
-      "name": "PUMPFUN"
-    },
-    {
-      "group": "perp",
-      "bybit": "CAPUSDT",
-      "symbol": "CAPUSDT",
-      "name": "CAP"
-    },
-    {
-      "group": "perp",
-      "bybit": "TUTUSDT",
-      "symbol": "TUTUSDT",
-      "name": "TUT"
-    },
-    {
-      "group": "perp",
-      "bybit": "SPORTFUNUSDT",
-      "symbol": "SPORTFUNUSDT",
-      "name": "SPORTFUN"
-    },
-    {
-      "group": "perp",
-      "bybit": "KAITOUSDT",
-      "symbol": "KAITOUSDT",
-      "name": "KAITO"
-    },
-    {
-      "group": "perp",
-      "bybit": "AEONUSDT",
-      "symbol": "AEONUSDT",
-      "name": "AEON"
-    },
-    {
-      "group": "perp",
-      "bybit": "CHIPUSDT",
-      "symbol": "CHIPUSDT",
-      "name": "CHIP"
-    },
-    {
-      "group": "perp",
-      "bybit": "FARTCOINUSDT",
-      "symbol": "FARTCOINUSDT",
-      "name": "FARTCOIN"
-    },
-    {
-      "group": "perp",
-      "bybit": "1000PEPEUSDT",
-      "symbol": "1000PEPEUSDT",
-      "name": "1000PEPE"
-    },
-    {
-      "group": "perp",
-      "bybit": "BTWUSDT",
-      "symbol": "BTWUSDT",
-      "name": "BTW"
-    },
-    {
-      "group": "perp",
-      "bybit": "NEARUSDT",
-      "symbol": "NEARUSDT",
-      "name": "NEAR"
-    },
-    {
-      "group": "perp",
-      "bybit": "BNBUSDT",
-      "symbol": "BNBUSDT",
-      "name": "BNB"
-    },
-    {
-      "group": "perp",
-      "bybit": "APTUSDT",
-      "symbol": "APTUSDT",
-      "name": "APT"
     },
     {
       "group": "perp",
@@ -230,39 +56,141 @@
     },
     {
       "group": "perp",
-      "bybit": "AAPLUSDT",
-      "symbol": "AAPLUSDT",
-      "name": "AAPL"
+      "bybit": "HUSDT",
+      "symbol": "HUSDT",
+      "name": "H"
     },
     {
       "group": "perp",
-      "bybit": "HOMEUSDT",
-      "symbol": "HOMEUSDT",
-      "name": "HOME"
+      "bybit": "BTWUSDT",
+      "symbol": "BTWUSDT",
+      "name": "BTW"
     },
     {
       "group": "perp",
-      "bybit": "SUIUSDT",
-      "symbol": "SUIUSDT",
-      "name": "SUI"
+      "bybit": "BEATUSDT",
+      "symbol": "BEATUSDT",
+      "name": "BEAT"
     },
     {
       "group": "perp",
-      "bybit": "ROBOUSDT",
-      "symbol": "ROBOUSDT",
-      "name": "ROBO"
+      "bybit": "CYSUSDT",
+      "symbol": "CYSUSDT",
+      "name": "CYS"
     },
     {
       "group": "perp",
-      "bybit": "TAOUSDT",
-      "symbol": "TAOUSDT",
-      "name": "TAO"
+      "bybit": "AKEUSDT",
+      "symbol": "AKEUSDT",
+      "name": "AKE"
     },
     {
       "group": "perp",
-      "bybit": "MOVRUSDT",
-      "symbol": "MOVRUSDT",
-      "name": "MOVR"
+      "bybit": "DOGEUSDT",
+      "symbol": "DOGEUSDT",
+      "name": "DOGE"
+    },
+    {
+      "group": "perp",
+      "bybit": "ACEUSDT",
+      "symbol": "ACEUSDT",
+      "name": "ACE"
+    },
+    {
+      "group": "perp",
+      "bybit": "ADAUSDT",
+      "symbol": "ADAUSDT",
+      "name": "ADA"
+    },
+    {
+      "group": "perp",
+      "bybit": "WLDUSDT",
+      "symbol": "WLDUSDT",
+      "name": "WLD"
+    },
+    {
+      "group": "perp",
+      "bybit": "LINKUSDT",
+      "symbol": "LINKUSDT",
+      "name": "LINK"
+    },
+    {
+      "group": "perp",
+      "bybit": "SOXLUSDT",
+      "symbol": "SOXLUSDT",
+      "name": "SOXL"
+    },
+    {
+      "group": "perp",
+      "bybit": "SKHYNIXUSDT",
+      "symbol": "SKHYNIXUSDT",
+      "name": "SKHYNIX"
+    },
+    {
+      "group": "perp",
+      "bybit": "GPSUSDT",
+      "symbol": "GPSUSDT",
+      "name": "GPS"
+    },
+    {
+      "group": "perp",
+      "bybit": "HEMIUSDT",
+      "symbol": "HEMIUSDT",
+      "name": "HEMI"
+    },
+    {
+      "group": "perp",
+      "bybit": "PUMPFUNUSDT",
+      "symbol": "PUMPFUNUSDT",
+      "name": "PUMPFUN"
+    },
+    {
+      "group": "perp",
+      "bybit": "CHIPUSDT",
+      "symbol": "CHIPUSDT",
+      "name": "CHIP"
+    },
+    {
+      "group": "perp",
+      "bybit": "CLUSDT",
+      "symbol": "CLUSDT",
+      "name": "CL"
+    },
+    {
+      "group": "perp",
+      "bybit": "SPCXUSDT",
+      "symbol": "SPCXUSDT",
+      "name": "SPCX"
+    },
+    {
+      "group": "perp",
+      "bybit": "1000PEPEUSDT",
+      "symbol": "1000PEPEUSDT",
+      "name": "1000PEPE"
+    },
+    {
+      "group": "perp",
+      "bybit": "APRUSDT",
+      "symbol": "APRUSDT",
+      "name": "APR"
+    },
+    {
+      "group": "perp",
+      "bybit": "SKHYUSDT",
+      "symbol": "SKHYUSDT",
+      "name": "SKHY"
+    },
+    {
+      "group": "perp",
+      "bybit": "XAGUSDT",
+      "symbol": "XAGUSDT",
+      "name": "XAG"
+    },
+    {
+      "group": "perp",
+      "bybit": "SNXXUSDT",
+      "symbol": "SNXXUSDT",
+      "name": "SNXX"
     },
     {
       "group": "perp",
@@ -272,33 +200,105 @@
     },
     {
       "group": "perp",
-      "bybit": "XPLUSDT",
-      "symbol": "XPLUSDT",
-      "name": "XPL"
+      "bybit": "XAUTUSDT",
+      "symbol": "XAUTUSDT",
+      "name": "XAUT"
     },
     {
       "group": "perp",
-      "bybit": "UNIUSDT",
-      "symbol": "UNIUSDT",
-      "name": "UNI"
+      "bybit": "TUTUSDT",
+      "symbol": "TUTUSDT",
+      "name": "TUT"
     },
     {
       "group": "perp",
-      "bybit": "ARBUSDT",
-      "symbol": "ARBUSDT",
-      "name": "ARB"
+      "bybit": "WLFIUSDT",
+      "symbol": "WLFIUSDT",
+      "name": "WLFI"
     },
     {
       "group": "perp",
-      "bybit": "XMRUSDT",
-      "symbol": "XMRUSDT",
-      "name": "XMR"
+      "bybit": "NEARUSDT",
+      "symbol": "NEARUSDT",
+      "name": "NEAR"
     },
     {
       "group": "perp",
-      "bybit": "CLUSDT",
-      "symbol": "CLUSDT",
-      "name": "CL"
+      "bybit": "VELVETUSDT",
+      "symbol": "VELVETUSDT",
+      "name": "VELVET"
+    },
+    {
+      "group": "perp",
+      "bybit": "MUUSDT",
+      "symbol": "MUUSDT",
+      "name": "MU"
+    },
+    {
+      "group": "perp",
+      "bybit": "SUIUSDT",
+      "symbol": "SUIUSDT",
+      "name": "SUI"
+    },
+    {
+      "group": "perp",
+      "bybit": "FARTCOINUSDT",
+      "symbol": "FARTCOINUSDT",
+      "name": "FARTCOIN"
+    },
+    {
+      "group": "perp",
+      "bybit": "KORUUSDT",
+      "symbol": "KORUUSDT",
+      "name": "KORU"
+    },
+    {
+      "group": "perp",
+      "bybit": "CAPUSDT",
+      "symbol": "CAPUSDT",
+      "name": "CAP"
+    },
+    {
+      "group": "perp",
+      "bybit": "BNBUSDT",
+      "symbol": "BNBUSDT",
+      "name": "BNB"
+    },
+    {
+      "group": "perp",
+      "bybit": "AVAXUSDT",
+      "symbol": "AVAXUSDT",
+      "name": "AVAX"
+    },
+    {
+      "group": "perp",
+      "bybit": "ENAUSDT",
+      "symbol": "ENAUSDT",
+      "name": "ENA"
+    },
+    {
+      "group": "perp",
+      "bybit": "COWUSDT",
+      "symbol": "COWUSDT",
+      "name": "COW"
+    },
+    {
+      "group": "perp",
+      "bybit": "TAOUSDT",
+      "symbol": "TAOUSDT",
+      "name": "TAO"
+    },
+    {
+      "group": "perp",
+      "bybit": "KAITOUSDT",
+      "symbol": "KAITOUSDT",
+      "name": "KAITO"
+    },
+    {
+      "group": "perp",
+      "bybit": "HFTUSDT",
+      "symbol": "HFTUSDT",
+      "name": "HFT"
     }
   ]
 }
