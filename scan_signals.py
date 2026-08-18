@@ -153,7 +153,7 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
             break
         end_ms = int(rows[-1][0]) - 1
         if os.environ.get("GITHUB_ACTIONS"):
-            time.sleep(0.05)
+            time.sleep(0.12)
 
     out.sort(key=lambda x: x["time"])
     if len(out) > want:
@@ -729,7 +729,7 @@ def _main_impl() -> int:
     )
 
     results: list[dict] = []
-    workers = 6 if os.environ.get("GITHUB_ACTIONS") else 8
+    workers = 3 if os.environ.get("GITHUB_ACTIONS") else 8
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futs = {pool.submit(scan_job, j): j for j in jobs}
         done = 0
@@ -765,10 +765,8 @@ def _main_impl() -> int:
 
     ok = sum(1 for r in slim_results if not r.get("error"))
     if ok == 0:
-        prev_html = os.path.join(OUT_DIR, "latest.html")
-        if os.environ.get("GITHUB_ACTIONS") and os.path.isfile(prev_html):
-            print("All scan jobs failed; keeping previous committed report", flush=True)
-            return 0
+        print("All scan jobs failed", flush=True)
+        return 1
 
     generated_at = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     payload = {

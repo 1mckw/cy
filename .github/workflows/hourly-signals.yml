@@ -39,6 +39,7 @@ jobs:
           python-version: "3.12"
 
       - name: Scan Bybit TOP50 contracts
+        if: github.event_name != 'push'
         id: scan
         env:
           PYTHONUNBUFFERED: "1"
@@ -46,14 +47,14 @@ jobs:
         run: python -u scan_signals.py
 
       - name: Commit signal report
-        if: steps.scan.outcome == 'success' && github.event_name != 'push'
+        if: steps.scan.outcome == 'success' && github.event_name == 'schedule'
         run: |
           git add signals/latest.json signals/latest.html signals/index.html signals/chart-packs.json signals/universe-cache.json
           if git diff --staged --quiet; then
             echo "No signal file changes"
             exit 0
           fi
-          git commit -m "chore: update crypto hourly touch alerts (Bybit TOP50) [skip ci]"
+          git commit -m "chore: update crypto hourly touch alerts (Bybit TOP50)"
           git pull --rebase origin main || true
           git push origin main
         env:
@@ -63,7 +64,7 @@ jobs:
           GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Prepare Pages site
-        if: steps.scan.outcome == 'success'
+        if: github.event_name == 'push' || steps.scan.outcome == 'success'
         run: |
           test -f signals/latest.html || { echo "Missing signals/latest.html"; exit 1; }
           mkdir -p _site
@@ -71,15 +72,16 @@ jobs:
           cp signals/latest.json _site/latest.json
           cp signals/chart-packs.json _site/chart-packs.json
           touch _site/.nojekyll
+          echo "Deploying report: $(python -c \"import json;print(json.load(open('signals/latest.json',encoding='utf-8'))['generated_at'])\")"
 
       - uses: actions/upload-pages-artifact@v3
-        if: steps.scan.outcome == 'success'
+        if: github.event_name == 'push' || steps.scan.outcome == 'success'
         with:
           path: _site
 
   deploy:
     needs: scan
-    if: needs.scan.result == 'success'
+    if: needs.scan.result == 'success' || github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
