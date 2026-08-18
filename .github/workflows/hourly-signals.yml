@@ -72,7 +72,7 @@ jobs:
           cp signals/latest.json _site/latest.json
           cp signals/chart-packs.json _site/chart-packs.json
           touch _site/.nojekyll
-          echo "Deploying report: $(python -c \"import json;print(json.load(open('signals/latest.json',encoding='utf-8'))['generated_at'])\")"
+          python -c "import json; print('Deploying report:', json.load(open('signals/latest.json', encoding='utf-8'))['generated_at'])"
 
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name == 'push' || steps.scan.outcome == 'success'
@@ -81,7 +81,7 @@ jobs:
 
   deploy:
     needs: scan
-    if: needs.scan.result == 'success' || github.event_name == 'push'
+    if: always() && (needs.scan.result == 'success' || github.event_name == 'push')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
