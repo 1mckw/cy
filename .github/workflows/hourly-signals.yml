@@ -26,17 +26,12 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+          fetch-depth: 1
 
       - name: Scan TOP50 contracts (Binance klines + Bybit universe)
         if: github.event_name != 'push'
@@ -45,7 +40,7 @@ jobs:
         env:
           PYTHONUNBUFFERED: "1"
           PYTHONIOENCODING: utf-8
-        run: python -u scan_signals.py
+        run: python3 -u scan_signals.py
 
       - name: Commit signal report
         if: steps.scan.outcome == 'success' && github.event_name != 'push'
@@ -73,7 +68,7 @@ jobs:
           cp signals/latest.json _site/latest.json
           cp signals/chart-packs.json _site/chart-packs.json
           touch _site/.nojekyll
-          python -c "import json; print('Deploying report:', json.load(open('signals/latest.json', encoding='utf-8'))['generated_at'])"
+          python3 -c "import json; print('Deploying report:', json.load(open('signals/latest.json', encoding='utf-8'))['generated_at'])"
           if [ "${{ steps.scan.outcome }}" != "success" ]; then
             echo "::warning::Scan failed; deploying last committed report"
           fi
@@ -97,7 +92,7 @@ jobs:
         continue-on-error: true
       - name: Wait before retry
         if: steps.deployment.outcome == 'failure'
-        run: sleep 45
+        run: sleep 20
       - name: Retry deploy (GitHub 429/5xx)
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4

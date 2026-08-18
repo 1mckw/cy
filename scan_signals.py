@@ -40,6 +40,8 @@ BYBIT_TO_BINANCE: dict[str, str] = {
 }
 
 _binance_symbols: set[str] | None = None
+ON_GHA = bool(os.environ.get("GITHUB_ACTIONS"))
+HTTP_TIMEOUT = 12 if ON_GHA else 30
 
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
@@ -98,13 +100,21 @@ def chart_key(group: str, symbol: str, timeframe: str) -> str:
     return f"{group}|{symbol}|{timeframe}"
 
 
-def http_get_json(url: str, timeout: int = 45) -> Any:
+def http_get_json(url: str, timeout: int | None = None) -> Any:
     req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
+    with urllib.request.urlopen(req, timeout=timeout or HTTP_TIMEOUT) as resp:
         return json.loads(resp.read().decode())
 
 
-def _bybit_get_json(path: str, params: dict[str, str | int], timeout: int = 45) -> Any:
+def wanted_bars(timeframe: str, bars: int | None = None) -> int:
+    want = bars if bars is not None else int(TIMEFRAMES[timeframe]["bars"])
+    if ON_GHA:
+        # One REST page is enough on CI (Bybit max 1000; charts use 320–400).
+        want = min(want, 1000)
+    return want
+
+
+def _bybit_get_json(path: str, params: dict[str, str | int], timeout: int | None = None) -> Any:
     query = urllib.parse.urlencode(params)
     last_err: Exception | None = None
     for host in BYBIT_HOSTS:
@@ -147,9 +157,8 @@ def resolve_binance_symbol(bybit_symbol: str) -> str | None:
 
 
 def fetch_binance(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
-    cfg = TIMEFRAMES[timeframe]
     interval = BINANCE_INTERVALS[timeframe]
-    want = bars if bars is not None else int(cfg["bars"])
+    want = wanted_bars(timeframe, bars)
     limit = min(1500, want)
     query = urllib.parse.urlencode(
         {"symbol": symbol, "interval": interval, "limit": limit}
@@ -193,7 +202,7 @@ def fetch_candles(bybit_symbol: str, timeframe: str) -> tuple[list[dict], str]:
 def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
     cfg = TIMEFRAMES[timeframe]
     interval = cfg["interval"]
-    want = bars if bars is not None else int(cfg["bars"])
+    want = wanted_bars(timeframe, bars)
     out: list[dict] = []
     end_ms: int | None = None
 
@@ -236,8 +245,6 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
         if len(rows) < limit:
             break
         end_ms = int(rows[-1][0]) - 1
-        if os.environ.get("GITHUB_ACTIONS"):
-            time.sleep(0.25)
 
     out.sort(key=lambda x: x["time"])
     if len(out) > want:
@@ -249,9 +256,9 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
 
 def with_retries(fn, retries: int | None = None, pause: float | None = None):
     if retries is None:
-        retries = 6 if os.environ.get("GITHUB_ACTIONS") else 3
+        retries = 3
     if pause is None:
-        pause = 2.0 if os.environ.get("GITHUB_ACTIONS") else 0.8
+        pause = 0.5 if ON_GHA else 0.8
     last_err = None
     for attempt in range(retries):
         try:
@@ -804,10 +811,12 @@ def main() -> int:
 
 def _main_impl() -> int:
     os.makedirs(OUT_DIR, exist_ok=True)
+    global _binance_symbols
     try:
         binance_n = len(load_binance_symbols())
         print(f"Binance USDT-M symbols loaded: {binance_n}", flush=True)
     except Exception as exc:  # noqa: BLE001
+        _binance_symbols = set()
         print(f"Binance exchangeInfo unavailable ({exc}); Bybit fallback only", flush=True)
     base_jobs = build_scan_jobs()
     jobs: list[dict[str, str]] = []
@@ -821,11 +830,27 @@ def _main_impl() -> int:
         flush=True,
     )
 
+    binance_jobs: list[dict[str, str]] = []
+    bybit_jobs: list[dict[str, str]] = []
+    for j in jobs:
+        if resolve_binance_symbol(j["bybit"]):
+            binance_jobs.append(j)
+        else:
+            bybit_jobs.append(j)
+    print(f"  routes: Binance {len(binance_jobs)}, Bybit {len(bybit_jobs)}", flush=True)
+
+    bn_workers = 16 if ON_GHA else 8
+    bb_workers = 4 if ON_GHA else 6
+    if not binance_jobs:
+        bb_workers = 3 if ON_GHA else 6
+
     results: list[dict] = []
-    workers = 6 if os.environ.get("GITHUB_ACTIONS") else 8
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futs = {pool.submit(scan_job, j): j for j in jobs}
-        done = 0
+    done = 0
+    with ThreadPoolExecutor(max_workers=bn_workers) as bn_pool, ThreadPoolExecutor(
+        max_workers=max(1, bb_workers)
+    ) as bb_pool:
+        futs = [bn_pool.submit(scan_job, j) for j in binance_jobs]
+        futs += [bb_pool.submit(scan_job, j) for j in bybit_jobs]
         for fut in as_completed(futs):
             results.append(fut.result())
             done += 1
@@ -857,7 +882,7 @@ def _main_impl() -> int:
     )
 
     ok = sum(1 for r in slim_results if not r.get("error"))
-    min_ok = len(jobs) if not os.environ.get("GITHUB_ACTIONS") else max(45, len(jobs) * 2 // 3)
+    min_ok = len(jobs) if not ON_GHA else max(45, len(jobs) * 2 // 3)
     if ok < min_ok:
         print(f"Too few OK jobs: {ok}/{len(jobs)} (need {min_ok})", flush=True)
         return 1
