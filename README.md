@@ -2,6 +2,10 @@
 
 GitHub Pages 每小時掃描 **Bybit USDT 永續合約 24h 交易額 TOP50**，輸出 AR/DR 與趨勢線觸碰報告。
 
+- **商品池排名**：Bybit tickers API
+- **K 線掃描**：優先 Binance USDT-M 永續（CI 更快更穩）；Binance 無對應合約時回退 Bybit
+- **图表展示**：Bybit / TradingView `BYBIT:*.P`
+
 ## 線上報告
 
 - HTML：https://1mckw.github.io/cy/
@@ -23,7 +27,7 @@ GitHub Pages 每小時掃描 **Bybit USDT 永續合約 24h 交易額 TOP50**，�
 | 4H | 1200 | 400 | 30 根（約 5 天） |
 | 1D | 800 | 320 | 5 根（約 5 天） |
 
-蠟燭圖資料優先使用 **Bybit API**；若無本地 pack，備援 **TradingView BYBIT 合約**。
+蠟燭圖資料：掃描 pack 來自 Binance/Bybit；彈窗優先本地 pack，備援 **TradingView BYBIT 合約**。
 
 ## AR/DR 規則
 

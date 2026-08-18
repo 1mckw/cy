@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Bybit USDT perpetual TOP50 — AR/DR + trend-line scanner (1H / 4H / 1D)."""
+"""Bybit USDT perpetual TOP50 — AR/DR + trend-line scanner (1H / 4H / 1D).
+
+Universe ranking from Bybit tickers; kline scan prefers Binance USDT-M futures
+(faster, CI-friendly). Charts still open Bybit / TradingView BYBIT:*.P.
+"""
 
 from __future__ import annotations
 
@@ -27,6 +31,15 @@ BYBIT_HOSTS = (
     "https://api.bybit.com",
     "https://api.bytick.com",
 )
+BINANCE_BASE = "https://fapi.binance.com"
+BINANCE_INTERVALS = {"1h": "1h", "4h": "4h", "1d": "1d"}
+
+# Bybit symbol -> Binance USDT-M perpetual (when names differ).
+BYBIT_TO_BINANCE: dict[str, str] = {
+    "SHIB1000USDT": "1000SHIBUSDT",
+}
+
+_binance_symbols: set[str] | None = None
 
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
@@ -104,6 +117,77 @@ def _bybit_get_json(path: str, params: dict[str, str | int], timeout: int = 45) 
         except Exception as exc:  # noqa: BLE001
             last_err = exc
     raise last_err  # type: ignore[misc]
+
+
+def load_binance_symbols() -> set[str]:
+    global _binance_symbols
+    if _binance_symbols is not None:
+        return _binance_symbols
+    payload = http_get_json(BINANCE_BASE + "/fapi/v1/exchangeInfo")
+    symbols: set[str] = set()
+    for row in payload.get("symbols") or []:
+        if (
+            row.get("status") == "TRADING"
+            and row.get("contractType") == "PERPETUAL"
+            and row.get("quoteAsset") == "USDT"
+        ):
+            symbols.add(str(row.get("symbol") or ""))
+    _binance_symbols = {s for s in symbols if s}
+    return _binance_symbols
+
+
+def resolve_binance_symbol(bybit_symbol: str) -> str | None:
+    symbols = load_binance_symbols()
+    if bybit_symbol in symbols:
+        return bybit_symbol
+    alias = BYBIT_TO_BINANCE.get(bybit_symbol)
+    if alias and alias in symbols:
+        return alias
+    return None
+
+
+def fetch_binance(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
+    cfg = TIMEFRAMES[timeframe]
+    interval = BINANCE_INTERVALS[timeframe]
+    want = bars if bars is not None else int(cfg["bars"])
+    limit = min(1500, want)
+    query = urllib.parse.urlencode(
+        {"symbol": symbol, "interval": interval, "limit": limit}
+    )
+    rows = http_get_json(BINANCE_BASE + "/fapi/v1/klines?" + query)
+    if not isinstance(rows, list):
+        raise RuntimeError(f"Binance kline error for {symbol} ({timeframe})")
+    out: list[dict] = []
+    for row in rows:
+        ts_ms = int(row[0])
+        o, h, l, c = float(row[1]), float(row[2]), float(row[3]), float(row[4])
+        v = float(row[5] or 0)
+        out.append(
+            {
+                "time": ts_ms // 1000,
+                "open": o,
+                "high": h,
+                "low": l,
+                "close": c,
+                "volume": v,
+            }
+        )
+    if len(out) > want:
+        out = out[-want:]
+    if not out:
+        raise RuntimeError(f"No Binance kline data for {symbol} ({timeframe})")
+    return out
+
+
+def fetch_candles(bybit_symbol: str, timeframe: str) -> tuple[list[dict], str]:
+    """Return OHLCV bars and data source label (binance | bybit)."""
+    binance_symbol = resolve_binance_symbol(bybit_symbol)
+    if binance_symbol:
+        try:
+            return fetch_binance(binance_symbol, timeframe), "binance"
+        except Exception:  # noqa: BLE001
+            pass
+    return fetch_bybit(bybit_symbol, timeframe), "bybit"
 
 
 def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
@@ -328,7 +412,7 @@ def scan_job(job: dict[str, str]) -> dict:
     cfg = TIMEFRAMES[timeframe]
     touch_window = int(cfg["touch_window"])
     try:
-        candles = with_retries(lambda: fetch_bybit(bybit, timeframe))
+        candles, data_source = with_retries(lambda: fetch_candles(bybit, timeframe))
         signals = detect_signals(candles)
         late = collect_late_ar_dr_touches(candles, signals, touch_window)
         near = collect_late_ar_dr_near_misses(candles, signals, touch_window)
@@ -343,7 +427,7 @@ def scan_job(job: dict[str, str]) -> dict:
             "symbol": symbol,
             "bybit_symbol": bybit,
             "name": name,
-            "source": "bybit",
+            "source": data_source,
             "timeframe": timeframe,
             "bars": len(candles),
             "events": events,
@@ -356,7 +440,7 @@ def scan_job(job: dict[str, str]) -> dict:
             "symbol": symbol,
             "bybit_symbol": bybit,
             "name": name,
-            "source": "bybit",
+            "source": "unknown",
             "timeframe": timeframe,
             "bars": 0,
             "events": [],
@@ -720,6 +804,11 @@ def main() -> int:
 
 def _main_impl() -> int:
     os.makedirs(OUT_DIR, exist_ok=True)
+    try:
+        binance_n = len(load_binance_symbols())
+        print(f"Binance USDT-M symbols loaded: {binance_n}", flush=True)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Binance exchangeInfo unavailable ({exc}); Bybit fallback only", flush=True)
     base_jobs = build_scan_jobs()
     jobs: list[dict[str, str]] = []
     for job in base_jobs:
@@ -733,22 +822,15 @@ def _main_impl() -> int:
     )
 
     results: list[dict] = []
-    if os.environ.get("GITHUB_ACTIONS"):
-        for i, job in enumerate(jobs):
-            results.append(scan_job(job))
-            if (i + 1) % 10 == 0:
-                print(f"  progress {i + 1}/{len(jobs)}", flush=True)
-            time.sleep(0.2)
-    else:
-        workers = 8
-        with ThreadPoolExecutor(max_workers=workers) as pool:
-            futs = {pool.submit(scan_job, j): j for j in jobs}
-            done = 0
-            for fut in as_completed(futs):
-                results.append(fut.result())
-                done += 1
-                if done % 20 == 0:
-                    print(f"  progress {done}/{len(jobs)}", flush=True)
+    workers = 6 if os.environ.get("GITHUB_ACTIONS") else 8
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = {pool.submit(scan_job, j): j for j in jobs}
+        done = 0
+        for fut in as_completed(futs):
+            results.append(fut.result())
+            done += 1
+            if done % 20 == 0:
+                print(f"  progress {done}/{len(jobs)}", flush=True)
 
     hits: list[dict] = []
     charts: dict[str, dict] = {}
@@ -834,7 +916,13 @@ def _main_impl() -> int:
         for e in errs[:8]:
             print(f"  {e['symbol']} ({e['bybit_symbol']}): {e['error']}", flush=True)
 
-    print(f"Hits: {len(hits)} · OK: {ok}/{len(jobs)}", flush=True)
+    src_binance = sum(1 for r in slim_results if r.get("source") == "binance" and not r.get("error"))
+    src_bybit = sum(1 for r in slim_results if r.get("source") == "bybit" and not r.get("error"))
+    print(
+        f"Hits: {len(hits)} · OK: {ok}/{len(jobs)} · "
+        f"data: Binance {src_binance}, Bybit {src_bybit}",
+        flush=True,
+    )
     return 0
 
 

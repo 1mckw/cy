@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Scan Bybit TOP50 contracts
+      - name: Scan TOP50 contracts (Binance klines + Bybit universe)
         if: github.event_name != 'push'
         id: scan
         continue-on-error: true

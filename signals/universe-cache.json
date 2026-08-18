@@ -116,15 +116,15 @@
     },
     {
       "group": "perp",
-      "bybit": "AKEUSDT",
-      "symbol": "AKEUSDT",
-      "name": "AKE"
-    },
-    {
-      "group": "perp",
       "bybit": "MUUSDT",
       "symbol": "MUUSDT",
       "name": "MU"
+    },
+    {
+      "group": "perp",
+      "bybit": "AKEUSDT",
+      "symbol": "AKEUSDT",
+      "name": "AKE"
     },
     {
       "group": "perp",
@@ -146,9 +146,9 @@
     },
     {
       "group": "perp",
-      "bybit": "PUMPFUNUSDT",
-      "symbol": "PUMPFUNUSDT",
-      "name": "PUMPFUN"
+      "bybit": "XAUTUSDT",
+      "symbol": "XAUTUSDT",
+      "name": "XAUT"
     },
     {
       "group": "perp",
@@ -158,9 +158,9 @@
     },
     {
       "group": "perp",
-      "bybit": "XAUTUSDT",
-      "symbol": "XAUTUSDT",
-      "name": "XAUT"
+      "bybit": "PUMPFUNUSDT",
+      "symbol": "PUMPFUNUSDT",
+      "name": "PUMPFUN"
     },
     {
       "group": "perp",
@@ -236,27 +236,27 @@
     },
     {
       "group": "perp",
-      "bybit": "ONDOUSDT",
-      "symbol": "ONDOUSDT",
-      "name": "ONDO"
-    },
-    {
-      "group": "perp",
       "bybit": "ENAUSDT",
       "symbol": "ENAUSDT",
       "name": "ENA"
     },
     {
       "group": "perp",
-      "bybit": "BTWUSDT",
-      "symbol": "BTWUSDT",
-      "name": "BTW"
+      "bybit": "ONDOUSDT",
+      "symbol": "ONDOUSDT",
+      "name": "ONDO"
     },
     {
       "group": "perp",
       "bybit": "FARTCOINUSDT",
       "symbol": "FARTCOINUSDT",
       "name": "FARTCOIN"
+    },
+    {
+      "group": "perp",
+      "bybit": "BTWUSDT",
+      "symbol": "BTWUSDT",
+      "name": "BTW"
     },
     {
       "group": "perp",
@@ -272,12 +272,6 @@
     },
     {
       "group": "perp",
-      "bybit": "AVAXUSDT",
-      "symbol": "AVAXUSDT",
-      "name": "AVAX"
-    },
-    {
-      "group": "perp",
       "bybit": "CLOUSDT",
       "symbol": "CLOUSDT",
       "name": "CLO"
@@ -290,15 +284,21 @@
     },
     {
       "group": "perp",
-      "bybit": "KAITOUSDT",
-      "symbol": "KAITOUSDT",
-      "name": "KAITO"
+      "bybit": "AVAXUSDT",
+      "symbol": "AVAXUSDT",
+      "name": "AVAX"
     },
     {
       "group": "perp",
       "bybit": "GALAUSDT",
       "symbol": "GALAUSDT",
       "name": "GALA"
+    },
+    {
+      "group": "perp",
+      "bybit": "KAITOUSDT",
+      "symbol": "KAITOUSDT",
+      "name": "KAITO"
     }
   ]
 }
