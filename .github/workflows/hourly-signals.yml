@@ -34,13 +34,11 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Python
-        if: github.event_name != 'push'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Scan Bybit TOP50 contracts
-        if: github.event_name != 'push'
         id: scan
         env:
           PYTHONUNBUFFERED: "1"
@@ -48,14 +46,14 @@ jobs:
         run: python -u scan_signals.py
 
       - name: Commit signal report
-        if: github.event_name != 'push' && steps.scan.outcome == 'success'
+        if: steps.scan.outcome == 'success' && github.event_name != 'push'
         run: |
           git add signals/latest.json signals/latest.html signals/index.html signals/chart-packs.json signals/universe-cache.json
           if git diff --staged --quiet; then
             echo "No signal file changes"
             exit 0
           fi
-          git commit -m "chore: update crypto hourly touch alerts (Bybit TOP50)"
+          git commit -m "chore: update crypto hourly touch alerts (Bybit TOP50) [skip ci]"
           git pull --rebase origin main || true
           git push origin main
         env:
@@ -65,7 +63,7 @@ jobs:
           GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Prepare Pages site
-        if: always()
+        if: steps.scan.outcome == 'success'
         run: |
           test -f signals/latest.html || { echo "Missing signals/latest.html"; exit 1; }
           mkdir -p _site
@@ -75,13 +73,13 @@ jobs:
           touch _site/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3
-        if: always()
+        if: steps.scan.outcome == 'success'
         with:
           path: _site
 
   deploy:
     needs: scan
-    if: always() && needs.scan.result != 'cancelled'
+    if: needs.scan.result == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
