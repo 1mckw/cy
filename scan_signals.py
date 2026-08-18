@@ -153,7 +153,7 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
             break
         end_ms = int(rows[-1][0]) - 1
         if os.environ.get("GITHUB_ACTIONS"):
-            time.sleep(0.12)
+            time.sleep(0.25)
 
     out.sort(key=lambda x: x["time"])
     if len(out) > want:
@@ -163,7 +163,11 @@ def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> 
     return out
 
 
-def with_retries(fn, retries: int = 3, pause: float = 0.8):
+def with_retries(fn, retries: int | None = None, pause: float | None = None):
+    if retries is None:
+        retries = 6 if os.environ.get("GITHUB_ACTIONS") else 3
+    if pause is None:
+        pause = 2.0 if os.environ.get("GITHUB_ACTIONS") else 0.8
     last_err = None
     for attempt in range(retries):
         try:
@@ -729,15 +733,22 @@ def _main_impl() -> int:
     )
 
     results: list[dict] = []
-    workers = 3 if os.environ.get("GITHUB_ACTIONS") else 8
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futs = {pool.submit(scan_job, j): j for j in jobs}
-        done = 0
-        for fut in as_completed(futs):
-            results.append(fut.result())
-            done += 1
-            if done % 20 == 0:
-                print(f"  progress {done}/{len(jobs)}", flush=True)
+    if os.environ.get("GITHUB_ACTIONS"):
+        for i, job in enumerate(jobs):
+            results.append(scan_job(job))
+            if (i + 1) % 10 == 0:
+                print(f"  progress {i + 1}/{len(jobs)}", flush=True)
+            time.sleep(0.2)
+    else:
+        workers = 8
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futs = {pool.submit(scan_job, j): j for j in jobs}
+            done = 0
+            for fut in as_completed(futs):
+                results.append(fut.result())
+                done += 1
+                if done % 20 == 0:
+                    print(f"  progress {done}/{len(jobs)}", flush=True)
 
     hits: list[dict] = []
     charts: dict[str, dict] = {}
@@ -764,8 +775,9 @@ def _main_impl() -> int:
     )
 
     ok = sum(1 for r in slim_results if not r.get("error"))
-    if ok == 0:
-        print("All scan jobs failed", flush=True)
+    min_ok = len(jobs) if not os.environ.get("GITHUB_ACTIONS") else max(45, len(jobs) * 2 // 3)
+    if ok < min_ok:
+        print(f"Too few OK jobs: {ok}/{len(jobs)} (need {min_ok})", flush=True)
         return 1
 
     generated_at = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -823,8 +835,6 @@ def _main_impl() -> int:
             print(f"  {e['symbol']} ({e['bybit_symbol']}): {e['error']}", flush=True)
 
     print(f"Hits: {len(hits)} · OK: {ok}/{len(jobs)}", flush=True)
-    if ok == 0:
-        return 1
     return 0
 
 
