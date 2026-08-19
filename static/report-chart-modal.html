@@ -219,7 +219,42 @@
     return out;
   }
 
-  function renderPack(pack) {
+  const HIGHLIGHT_COLOR = "rgba(250,204,21,1)";
+  const HIGHLIGHT_WIDTH = 2;
+
+  function isTrendAlert(kind) {
+    return kind === "trend_touch" || kind === "trend_exceed";
+  }
+
+  function isRayAlert(kind) {
+    return kind === "ar_dr_touch" || kind === "ar_dr_near";
+  }
+
+  function trendLineMatchesAlert(line, alertInfo) {
+    if (!alertInfo || !isTrendAlert(alertInfo.kind)) return false;
+    if (line.type !== alertInfo.type) return false;
+    const lvl = Number(alertInfo.level);
+    if (!Number.isFinite(lvl)) return true;
+    const lineSlope = (line.endPrice - line.p1.price) / Math.max(1, line.endTime - line.p1.time);
+    const alertTime = Number(alertInfo.time);
+    const priceAtAlert = line.p1.price + lineSlope * (alertTime - line.p1.time);
+    const tol = Math.abs(priceAtAlert) * 0.02;
+    return Math.abs(lvl - priceAtAlert) <= tol;
+  }
+
+  function rayMatchesAlert(ray, alertInfo) {
+    if (!alertInfo || !isRayAlert(alertInfo.kind)) return false;
+    const lvl = Number(alertInfo.level);
+    if (!Number.isFinite(lvl)) return false;
+    const segs = ray.segments || [];
+    for (const seg of segs) {
+      const tol = Math.abs(seg.price) * 0.005;
+      if (Math.abs(seg.price - lvl) <= tol) return true;
+    }
+    return false;
+  }
+
+  function renderPack(pack, alertInfo) {
     destroyChart();
     lwcEl.hidden = false;
     frameEl.hidden = true;
@@ -254,14 +289,19 @@
       maxTouchByType[t] = Math.max(maxTouchByType[t] || 0, n);
     });
     trendLines.forEach((line) => {
-      const maxTouch = maxTouchByType[line.type] || 0;
-      const touchN = Number(line.pivot_count) || 0;
-      const weaker = !line.invalidated && maxTouch > 0 && touchN < maxTouch;
-      const alpha = line.invalidated ? 0.3 : weaker ? 0.5 : 0.95;
-      const color = line.type === "resistance"
-        ? `rgba(239,68,68,${alpha})`
-        : `rgba(34,197,94,${alpha})`;
-      drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, color, 1);
+      const highlighted = trendLineMatchesAlert(line, alertInfo);
+      if (highlighted) {
+        drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, HIGHLIGHT_COLOR, HIGHLIGHT_WIDTH);
+      } else {
+        const maxTouch = maxTouchByType[line.type] || 0;
+        const touchN = Number(line.pivot_count) || 0;
+        const weaker = !line.invalidated && maxTouch > 0 && touchN < maxTouch;
+        const alpha = line.invalidated ? 0.3 : weaker ? 0.5 : 0.95;
+        const color = line.type === "resistance"
+          ? `rgba(239,68,68,${alpha})`
+          : `rgba(34,197,94,${alpha})`;
+        drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, color, 1);
+      }
     });
 
     const bestTouch = pack.best_touch_line;
@@ -277,7 +317,16 @@
     }
 
     (pack.rays || []).forEach((ray) => {
-      drawRaySegments(ray);
+      const highlighted = rayMatchesAlert(ray, alertInfo);
+      if (highlighted) {
+        const segs = ray.segments || [];
+        for (const seg of segs) {
+          if (seg.t0 == null || seg.t1 == null || seg.t0 >= seg.t1) continue;
+          drawSegment(seg.t0, seg.price, seg.t1, seg.price, HIGHLIGHT_COLOR, HIGHLIGHT_WIDTH, LightweightCharts.LineStyle.Dashed);
+        }
+      } else {
+        drawRaySegments(ray);
+      }
     });
 
     chart.timeScale().fitContent();
@@ -369,7 +418,8 @@
       if (pack && pack.candles && pack.candles.length) {
         if (token !== openToken) return;
         hideStatus();
-        renderPack(pack);
+        const alertInfo = (kind && !fromWatchlist) ? { kind, type, level, time: btn.dataset.time || "" } : null;
+        renderPack(pack, alertInfo);
         return;
       }
 
