@@ -46,7 +46,7 @@ HTTP_TIMEOUT = 12 if ON_GHA else 30
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
         "interval": "60",
-        "bars": 2000,
+        "bars": 1500,
         "chart_bars": 400,
         "touch_window": 480,
         "label": "1H",
