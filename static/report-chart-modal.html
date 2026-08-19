@@ -72,7 +72,7 @@
 
   function tvSymbol(group, symbol, tvOverride) {
     if (tvOverride) return tvOverride;
-    if (group === "perp" || group === "crypto") return "BYBIT:" + symbol + ".P";
+    if (group === "perp" || group === "crypto") return "BYBIT:" + (symbol.endsWith("USDT") ? symbol : symbol + "USDT") + ".P";
     if (group === "dji") return "NYSE:" + symbol;
     if (group === "ndx") return "NASDAQ:" + symbol;
     if (group === "index" && symbol === "DJI30") return "DJI";

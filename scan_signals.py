@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Bybit USDT perpetual TOP50 — AR/DR + trend-line scanner (1H / 4H / 1D).
+"""Hyperliquid perpetual TOP50 — AR/DR + trend-line scanner (1H / 4H / 1D).
 
-Universe ranking from Bybit tickers; kline scan prefers Binance USDT-M futures
-(faster, CI-friendly). Charts still open Bybit / TradingView BYBIT:*.P.
+Universe ranking and kline data from Hyperliquid (up to 5000 bars per request).
+Charts open TradingView BYBIT:*.P as visual fallback.
 """
 
 from __future__ import annotations
@@ -11,7 +11,6 @@ import html
 import json
 import os
 import time
-import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -26,40 +25,29 @@ OUT_DIR = os.path.join(ROOT, "signals")
 STATIC_DIR = os.path.join(ROOT, "static")
 CHART_PACKS_PATH = os.path.join(OUT_DIR, "chart-packs.json")
 
-BYBIT_BASE = "https://api.bybit.com"
-BYBIT_HOSTS = (
-    "https://api.bybit.com",
-    "https://api.bytick.com",
-)
-BINANCE_BASE = "https://fapi.binance.com"
-BINANCE_INTERVALS = {"1h": "1h", "4h": "4h", "1d": "1d"}
-
-# Bybit symbol -> Binance USDT-M perpetual (when names differ).
-BYBIT_TO_BINANCE: dict[str, str] = {
-    "SHIB1000USDT": "1000SHIBUSDT",
-}
-
-_binance_symbols: set[str] | None = None
+HL_API = "https://api.hyperliquid.xyz/info"
 ON_GHA = bool(os.environ.get("GITHUB_ACTIONS"))
-HTTP_TIMEOUT = 12 if ON_GHA else 30
+HTTP_TIMEOUT = 15
+
+HL_INTERVALS = {"1h": "1h", "4h": "4h", "1d": "1d"}
 
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
-        "interval": "60",
-        "bars": 1500,
+        "hl_interval": "1h",
+        "bars": 2000,
         "chart_bars": 400,
         "touch_window": 480,
         "label": "1H",
     },
     "4h": {
-        "interval": "240",
+        "hl_interval": "4h",
         "bars": 1200,
         "chart_bars": 400,
         "touch_window": 120,
         "label": "4H",
     },
     "1d": {
-        "interval": "D",
+        "hl_interval": "1d",
         "bars": 800,
         "chart_bars": 320,
         "touch_window": 20,
@@ -100,165 +88,56 @@ def chart_key(group: str, symbol: str, timeframe: str) -> str:
     return f"{group}|{symbol}|{timeframe}"
 
 
-def http_get_json(url: str, timeout: int | None = None) -> Any:
-    req = urllib.request.Request(url, headers=UA)
+def _hl_post(payload: dict, timeout: int | None = None) -> Any:
+    data = json.dumps(payload).encode()
+    req = urllib.request.Request(
+        HL_API, data=data,
+        headers={**UA, "Content-Type": "application/json"},
+    )
     with urllib.request.urlopen(req, timeout=timeout or HTTP_TIMEOUT) as resp:
         return json.loads(resp.read().decode())
 
 
-def wanted_bars(timeframe: str, bars: int | None = None) -> int:
-    return bars if bars is not None else int(TIMEFRAMES[timeframe]["bars"])
-
-
-def _bybit_get_json(path: str, params: dict[str, str | int], timeout: int | None = None) -> Any:
-    query = urllib.parse.urlencode(params)
-    last_err: Exception | None = None
-    for host in BYBIT_HOSTS:
-        url = host + path + "?" + query
-        try:
-            payload = http_get_json(url, timeout=timeout)
-            if int(payload.get("retCode") or 0) != 0:
-                raise RuntimeError(str(payload.get("retMsg") or "Bybit API error"))
-            return payload
-        except Exception as exc:  # noqa: BLE001
-            last_err = exc
-    raise last_err  # type: ignore[misc]
-
-
-def load_binance_symbols() -> set[str]:
-    global _binance_symbols
-    if _binance_symbols is not None:
-        return _binance_symbols
-    payload = http_get_json(BINANCE_BASE + "/fapi/v1/exchangeInfo")
-    symbols: set[str] = set()
-    for row in payload.get("symbols") or []:
-        if (
-            row.get("status") == "TRADING"
-            and row.get("contractType") == "PERPETUAL"
-            and row.get("quoteAsset") == "USDT"
-        ):
-            symbols.add(str(row.get("symbol") or ""))
-    _binance_symbols = {s for s in symbols if s}
-    return _binance_symbols
-
-
-def resolve_binance_symbol(bybit_symbol: str) -> str | None:
-    symbols = load_binance_symbols()
-    if bybit_symbol in symbols:
-        return bybit_symbol
-    alias = BYBIT_TO_BINANCE.get(bybit_symbol)
-    if alias and alias in symbols:
-        return alias
-    return None
-
-
-def fetch_binance(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
-    interval = BINANCE_INTERVALS[timeframe]
-    want = wanted_bars(timeframe, bars)
-    out: list[dict] = []
-    end_time: int | None = None
-
-    while len(out) < want:
-        limit = min(1500, want - len(out))
-        params: dict[str, str | int] = {
-            "symbol": symbol, "interval": interval, "limit": limit,
-        }
-        if end_time is not None:
-            params["endTime"] = end_time
-        query = urllib.parse.urlencode(params)
-        rows = http_get_json(BINANCE_BASE + "/fapi/v1/klines?" + query)
-        if not isinstance(rows, list) or not rows:
-            break
-        batch: list[dict] = []
-        for row in rows:
-            ts_ms = int(row[0])
-            o, h, l, c = float(row[1]), float(row[2]), float(row[3]), float(row[4])
-            v = float(row[5] or 0)
-            batch.append({
-                "time": ts_ms // 1000,
-                "open": o, "high": h, "low": l, "close": c, "volume": v,
-            })
-        if out:
-            earliest_existing = out[0]["time"]
-            batch = [b for b in batch if b["time"] < earliest_existing]
-            if not batch:
-                break
-        out = batch + out
-        if len(rows) < limit:
-            break
-        end_time = int(rows[0][0]) - 1
-
-    out.sort(key=lambda x: x["time"])
-    if len(out) > want:
-        out = out[-want:]
-    if not out:
-        raise RuntimeError(f"No Binance kline data for {symbol} ({timeframe})")
-    return out
-
-
-def fetch_candles(bybit_symbol: str, timeframe: str) -> tuple[list[dict], str]:
-    """Return OHLCV bars and data source label (binance | bybit)."""
-    binance_symbol = resolve_binance_symbol(bybit_symbol)
-    if binance_symbol:
-        try:
-            return fetch_binance(binance_symbol, timeframe), "binance"
-        except Exception:  # noqa: BLE001
-            pass
-    return fetch_bybit(bybit_symbol, timeframe), "bybit"
-
-
-def fetch_bybit(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
+def fetch_hyperliquid(coin: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
+    """Fetch OHLCV from Hyperliquid candleSnapshot (up to 5000/request)."""
     cfg = TIMEFRAMES[timeframe]
-    interval = cfg["interval"]
-    want = wanted_bars(timeframe, bars)
-    out: list[dict] = []
-    end_ms: int | None = None
+    interval = cfg["hl_interval"]
+    want = bars if bars is not None else int(cfg["bars"])
 
-    while len(out) < want:
-        limit = min(1000, want - len(out))
-        params: dict[str, str | int] = {
-            "category": "linear",
-            "symbol": symbol,
+    now_ms = int(time.time() * 1000)
+    interval_ms = {"1h": 3_600_000, "4h": 14_400_000, "1d": 86_400_000}[interval]
+    start_ms = now_ms - want * interval_ms
+
+    rows = _hl_post({
+        "type": "candleSnapshot",
+        "req": {
+            "coin": coin,
             "interval": interval,
-            "limit": limit,
-        }
-        if end_ms is not None:
-            params["end"] = end_ms
-        payload = _bybit_get_json("/v5/market/kline", params)
-        rows = (payload.get("result") or {}).get("list") or []
-        if not rows:
-            break
-        batch: list[dict] = []
-        for row in rows:
-            ts_ms = int(row[0])
-            o, h, l, c = float(row[1]), float(row[2]), float(row[3]), float(row[4])
-            v = float(row[5] or 0)
-            batch.append(
-                {
-                    "time": ts_ms // 1000,
-                    "open": o,
-                    "high": h,
-                    "low": l,
-                    "close": c,
-                    "volume": v,
-                }
-            )
-        batch.reverse()
-        if out:
-            oldest_existing = out[0]["time"]
-            batch = [b for b in batch if b["time"] < oldest_existing]
-            if not batch:
-                break
-        out = batch + out
-        if len(rows) < limit:
-            break
-        end_ms = int(rows[-1][0]) - 1
+            "startTime": start_ms,
+            "endTime": now_ms,
+        },
+    })
+    if not isinstance(rows, list):
+        raise RuntimeError(f"Hyperliquid kline error for {coin} ({timeframe})")
+
+    out: list[dict] = []
+    for row in rows:
+        ts_ms = int(row["t"])
+        o = float(row["o"])
+        h = float(row["h"])
+        l = float(row["l"])
+        c = float(row["c"])
+        v = float(row.get("v") or row.get("dayBaseVlm") or 0)
+        out.append({
+            "time": ts_ms // 1000,
+            "open": o, "high": h, "low": l, "close": c, "volume": v,
+        })
 
     out.sort(key=lambda x: x["time"])
     if len(out) > want:
         out = out[-want:]
     if not out:
-        raise RuntimeError(f"No Bybit kline data for {symbol} ({timeframe})")
+        raise RuntimeError(f"No Hyperliquid kline data for {coin} ({timeframe})")
     return out
 
 
@@ -420,14 +299,14 @@ def build_chart_pack(
 
 def scan_job(job: dict[str, str]) -> dict:
     group = job["group"]
-    bybit = job["bybit"]
+    coin = job["coin"]
     symbol = job["symbol"]
     name = job["name"]
     timeframe = job["timeframe"]
     cfg = TIMEFRAMES[timeframe]
     touch_window = int(cfg["touch_window"])
     try:
-        candles, data_source = with_retries(lambda: fetch_candles(bybit, timeframe))
+        candles = with_retries(lambda: fetch_hyperliquid(coin, timeframe))
         signals = detect_signals(candles)
         late = collect_late_ar_dr_touches(candles, signals, touch_window)
         near = collect_late_ar_dr_near_misses(candles, signals, touch_window)
@@ -440,9 +319,9 @@ def scan_job(job: dict[str, str]) -> dict:
         return {
             "group": group,
             "symbol": symbol,
-            "bybit_symbol": bybit,
+            "coin": coin,
             "name": name,
-            "source": data_source,
+            "source": "hyperliquid",
             "timeframe": timeframe,
             "bars": len(candles),
             "events": events,
@@ -453,9 +332,9 @@ def scan_job(job: dict[str, str]) -> dict:
         return {
             "group": group,
             "symbol": symbol,
-            "bybit_symbol": bybit,
+            "coin": coin,
             "name": name,
-            "source": "unknown",
+            "source": "hyperliquid",
             "timeframe": timeframe,
             "bars": 0,
             "events": [],
@@ -529,8 +408,8 @@ def render_html(payload: dict) -> str:
             f'data-group="{html.escape(grp, quote=True)}" '
             f'data-name="{html.escape(name, quote=True)}" '
             f'data-tf="{html.escape(tf, quote=True)}" '
-            f'data-source="bybit" '
-            f'data-tvSymbol="{html.escape("BYBIT:" + sym + ".P", quote=True)}" '
+            f'data-source="hyperliquid" '
+            f'data-tvSymbol="{html.escape("BYBIT:" + sym + "USDT.P", quote=True)}" '
             f'data-level="{html.escape(str(h.get("level", "")), quote=True)}" '
             f'data-type="{html.escape(str(h.get("type", "")), quote=True)}" '
             f'data-kind="{html.escape(str(h.get("kind", "")), quote=True)}" '
@@ -819,13 +698,6 @@ def main() -> int:
 
 def _main_impl() -> int:
     os.makedirs(OUT_DIR, exist_ok=True)
-    global _binance_symbols
-    try:
-        binance_n = len(load_binance_symbols())
-        print(f"Binance USDT-M symbols loaded: {binance_n}", flush=True)
-    except Exception as exc:  # noqa: BLE001
-        _binance_symbols = set()
-        print(f"Binance exchangeInfo unavailable ({exc}); Bybit fallback only", flush=True)
     base_jobs = build_scan_jobs()
     jobs: list[dict[str, str]] = []
     for job in base_jobs:
@@ -834,31 +706,15 @@ def _main_impl() -> int:
     perp_n = sum(1 for j in base_jobs if j["group"] == "perp")
     print(
         f"Scanning {len(jobs)} jobs "
-        f"({len(base_jobs)} symbols × {len(TIMEFRAME_ORDER)} TF: {', '.join(fmt_tf(t) for t in TIMEFRAME_ORDER)})…",
+        f"({len(base_jobs)} symbols × {len(TIMEFRAME_ORDER)} TF: {', '.join(fmt_tf(t) for t in TIMEFRAME_ORDER)}) via Hyperliquid…",
         flush=True,
     )
 
-    binance_jobs: list[dict[str, str]] = []
-    bybit_jobs: list[dict[str, str]] = []
-    for j in jobs:
-        if resolve_binance_symbol(j["bybit"]):
-            binance_jobs.append(j)
-        else:
-            bybit_jobs.append(j)
-    print(f"  routes: Binance {len(binance_jobs)}, Bybit {len(bybit_jobs)}", flush=True)
-
-    bn_workers = 16 if ON_GHA else 8
-    bb_workers = 4 if ON_GHA else 6
-    if not binance_jobs:
-        bb_workers = 3 if ON_GHA else 6
-
+    workers = 6
     results: list[dict] = []
     done = 0
-    with ThreadPoolExecutor(max_workers=bn_workers) as bn_pool, ThreadPoolExecutor(
-        max_workers=max(1, bb_workers)
-    ) as bb_pool:
-        futs = [bn_pool.submit(scan_job, j) for j in binance_jobs]
-        futs += [bb_pool.submit(scan_job, j) for j in bybit_jobs]
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = {pool.submit(scan_job, j): j for j in jobs}
         for fut in as_completed(futs):
             results.append(fut.result())
             done += 1
@@ -947,15 +803,9 @@ def _main_impl() -> int:
     if errs:
         print(f"Errors ({len(errs)}):", flush=True)
         for e in errs[:8]:
-            print(f"  {e['symbol']} ({e['bybit_symbol']}): {e['error']}", flush=True)
+            print(f"  {e['symbol']}: {e['error']}", flush=True)
 
-    src_binance = sum(1 for r in slim_results if r.get("source") == "binance" and not r.get("error"))
-    src_bybit = sum(1 for r in slim_results if r.get("source") == "bybit" and not r.get("error"))
-    print(
-        f"Hits: {len(hits)} · OK: {ok}/{len(jobs)} · "
-        f"data: Binance {src_binance}, Bybit {src_bybit}",
-        flush=True,
-    )
+    print(f"Hits: {len(hits)} · OK: {ok}/{len(jobs)}", flush=True)
     return 0
 
 
