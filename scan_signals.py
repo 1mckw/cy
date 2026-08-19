@@ -35,14 +35,14 @@ TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
         "hl_interval": "1h",
         "bars": 4320,
-        "chart_bars": 400,
+        "chart_bars": 4320,
         "touch_window": 480,
         "label": "1H",
     },
     "4h": {
         "hl_interval": "4h",
         "bars": 1080,
-        "chart_bars": 400,
+        "chart_bars": 1080,
         "touch_window": 120,
         "label": "4H",
     },
@@ -237,7 +237,7 @@ def build_chart_pack(
     t_max = int(trimmed[-1]["time"])
     last_time = t_max
 
-    visible_signals = [s for s in signals if t_min <= int(s["time"]) <= t_max]
+    visible_signals = [s for s in signals if int(s["time"]) <= t_max]
     rays = []
     for sig in visible_signals:
         ray = ardr.signal_to_chart_ray(sig, candles, last_time)
