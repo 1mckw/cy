@@ -46,7 +46,7 @@ HTTP_TIMEOUT = 12 if ON_GHA else 30
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
         "interval": "60",
-        "bars": 1200,
+        "bars": 2000,
         "chart_bars": 400,
         "touch_window": 480,
         "label": "1H",
@@ -107,11 +107,7 @@ def http_get_json(url: str, timeout: int | None = None) -> Any:
 
 
 def wanted_bars(timeframe: str, bars: int | None = None) -> int:
-    want = bars if bars is not None else int(TIMEFRAMES[timeframe]["bars"])
-    if ON_GHA:
-        # One REST page is enough on CI (Bybit max 1000; charts use 320–400).
-        want = min(want, 1000)
-    return want
+    return bars if bars is not None else int(TIMEFRAMES[timeframe]["bars"])
 
 
 def _bybit_get_json(path: str, params: dict[str, str | int], timeout: int | None = None) -> Any:
@@ -159,28 +155,40 @@ def resolve_binance_symbol(bybit_symbol: str) -> str | None:
 def fetch_binance(symbol: str, timeframe: str = "1d", bars: int | None = None) -> list[dict]:
     interval = BINANCE_INTERVALS[timeframe]
     want = wanted_bars(timeframe, bars)
-    limit = min(1500, want)
-    query = urllib.parse.urlencode(
-        {"symbol": symbol, "interval": interval, "limit": limit}
-    )
-    rows = http_get_json(BINANCE_BASE + "/fapi/v1/klines?" + query)
-    if not isinstance(rows, list):
-        raise RuntimeError(f"Binance kline error for {symbol} ({timeframe})")
     out: list[dict] = []
-    for row in rows:
-        ts_ms = int(row[0])
-        o, h, l, c = float(row[1]), float(row[2]), float(row[3]), float(row[4])
-        v = float(row[5] or 0)
-        out.append(
-            {
+    end_time: int | None = None
+
+    while len(out) < want:
+        limit = min(1500, want - len(out))
+        params: dict[str, str | int] = {
+            "symbol": symbol, "interval": interval, "limit": limit,
+        }
+        if end_time is not None:
+            params["endTime"] = end_time
+        query = urllib.parse.urlencode(params)
+        rows = http_get_json(BINANCE_BASE + "/fapi/v1/klines?" + query)
+        if not isinstance(rows, list) or not rows:
+            break
+        batch: list[dict] = []
+        for row in rows:
+            ts_ms = int(row[0])
+            o, h, l, c = float(row[1]), float(row[2]), float(row[3]), float(row[4])
+            v = float(row[5] or 0)
+            batch.append({
                 "time": ts_ms // 1000,
-                "open": o,
-                "high": h,
-                "low": l,
-                "close": c,
-                "volume": v,
-            }
-        )
+                "open": o, "high": h, "low": l, "close": c, "volume": v,
+            })
+        if out:
+            earliest_existing = out[0]["time"]
+            batch = [b for b in batch if b["time"] < earliest_existing]
+            if not batch:
+                break
+        out = batch + out
+        if len(rows) < limit:
+            break
+        end_time = int(rows[0][0]) - 1
+
+    out.sort(key=lambda x: x["time"])
     if len(out) > want:
         out = out[-want:]
     if not out:
