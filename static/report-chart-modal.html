@@ -195,7 +195,7 @@
         seg.t1,
         seg.price,
         rayColor(ray.type, seg.active),
-        seg.side === "upper" ? 1 : 1,
+        1,
         LightweightCharts.LineStyle.Dashed
       );
     }
@@ -261,7 +261,7 @@
       const color = line.type === "resistance"
         ? `rgba(239,68,68,${alpha})`
         : `rgba(34,197,94,${alpha})`;
-      drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, color, 2);
+      drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, color, 1);
     });
 
     const bestTouch = pack.best_touch_line;
@@ -271,8 +271,8 @@
         bestTouch.p1.price,
         bestTouch.endTime,
         bestTouch.endPrice,
-        "rgba(250,204,21,0.95)",
-        2,
+        "rgba(59,130,246,0.95)",
+        1,
       );
     }
 
