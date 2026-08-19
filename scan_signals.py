@@ -34,22 +34,22 @@ HL_INTERVALS = {"1h": "1h", "4h": "4h", "1d": "1d"}
 TIMEFRAMES: dict[str, dict[str, Any]] = {
     "1h": {
         "hl_interval": "1h",
-        "bars": 2000,
+        "bars": 4320,
         "chart_bars": 400,
         "touch_window": 480,
         "label": "1H",
     },
     "4h": {
         "hl_interval": "4h",
-        "bars": 1200,
+        "bars": 1080,
         "chart_bars": 400,
         "touch_window": 120,
         "label": "4H",
     },
     "1d": {
         "hl_interval": "1d",
-        "bars": 800,
-        "chart_bars": 320,
+        "bars": 180,
+        "chart_bars": 180,
         "touch_window": 20,
         "label": "1D",
     },
