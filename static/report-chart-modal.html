@@ -304,18 +304,6 @@
       }
     });
 
-    const bestTouch = pack.best_touch_line;
-    if (bestTouch) {
-      drawSegment(
-        bestTouch.p1.time,
-        bestTouch.p1.price,
-        bestTouch.endTime,
-        bestTouch.endPrice,
-        "rgba(59,130,246,0.95)",
-        1,
-      );
-    }
-
     (pack.rays || []).forEach((ray) => {
       const highlighted = rayMatchesAlert(ray, alertInfo);
       if (highlighted) {
