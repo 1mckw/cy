@@ -86,15 +86,15 @@
     },
     {
       "group": "perp",
-      "coin": "TAO",
-      "symbol": "TAO",
-      "name": "TAO"
-    },
-    {
-      "group": "perp",
       "coin": "SUI",
       "symbol": "SUI",
       "name": "SUI"
+    },
+    {
+      "group": "perp",
+      "coin": "TAO",
+      "symbol": "TAO",
+      "name": "TAO"
     },
     {
       "group": "perp",
@@ -110,12 +110,6 @@
     },
     {
       "group": "perp",
-      "coin": "NEAR",
-      "symbol": "NEAR",
-      "name": "NEAR"
-    },
-    {
-      "group": "perp",
       "coin": "XMR",
       "symbol": "XMR",
       "name": "XMR"
@@ -128,9 +122,9 @@
     },
     {
       "group": "perp",
-      "coin": "ADA",
-      "symbol": "ADA",
-      "name": "ADA"
+      "coin": "NEAR",
+      "symbol": "NEAR",
+      "name": "NEAR"
     },
     {
       "group": "perp",
@@ -140,9 +134,9 @@
     },
     {
       "group": "perp",
-      "coin": "AAVE",
-      "symbol": "AAVE",
-      "name": "AAVE"
+      "coin": "ADA",
+      "symbol": "ADA",
+      "name": "ADA"
     },
     {
       "group": "perp",
@@ -152,15 +146,27 @@
     },
     {
       "group": "perp",
-      "coin": "UNI",
-      "symbol": "UNI",
-      "name": "UNI"
+      "coin": "AAVE",
+      "symbol": "AAVE",
+      "name": "AAVE"
     },
     {
       "group": "perp",
       "coin": "MON",
       "symbol": "MON",
       "name": "MON"
+    },
+    {
+      "group": "perp",
+      "coin": "ASTER",
+      "symbol": "ASTER",
+      "name": "ASTER"
+    },
+    {
+      "group": "perp",
+      "coin": "UNI",
+      "symbol": "UNI",
+      "name": "UNI"
     },
     {
       "group": "perp",
@@ -176,27 +182,21 @@
     },
     {
       "group": "perp",
-      "coin": "ASTER",
-      "symbol": "ASTER",
-      "name": "ASTER"
-    },
-    {
-      "group": "perp",
       "coin": "PAXG",
       "symbol": "PAXG",
       "name": "PAXG"
     },
     {
       "group": "perp",
-      "coin": "VVV",
-      "symbol": "VVV",
-      "name": "VVV"
-    },
-    {
-      "group": "perp",
       "coin": "ETHFI",
       "symbol": "ETHFI",
       "name": "ETHFI"
+    },
+    {
+      "group": "perp",
+      "coin": "VVV",
+      "symbol": "VVV",
+      "name": "VVV"
     },
     {
       "group": "perp",
@@ -218,15 +218,15 @@
     },
     {
       "group": "perp",
-      "coin": "PURR",
-      "symbol": "PURR",
-      "name": "PURR"
-    },
-    {
-      "group": "perp",
       "coin": "ZRO",
       "symbol": "ZRO",
       "name": "ZRO"
+    },
+    {
+      "group": "perp",
+      "coin": "PURR",
+      "symbol": "PURR",
+      "name": "PURR"
     },
     {
       "group": "perp",
@@ -248,33 +248,27 @@
     },
     {
       "group": "perp",
-      "coin": "PENDLE",
-      "symbol": "PENDLE",
-      "name": "PENDLE"
-    },
-    {
-      "group": "perp",
       "coin": "KAITO",
       "symbol": "KAITO",
       "name": "KAITO"
     },
     {
       "group": "perp",
-      "coin": "VIRTUAL",
-      "symbol": "VIRTUAL",
-      "name": "VIRTUAL"
-    },
-    {
-      "group": "perp",
-      "coin": "BCH",
-      "symbol": "BCH",
-      "name": "BCH"
-    },
-    {
-      "group": "perp",
       "coin": "WLFI",
       "symbol": "WLFI",
       "name": "WLFI"
+    },
+    {
+      "group": "perp",
+      "coin": "PENDLE",
+      "symbol": "PENDLE",
+      "name": "PENDLE"
+    },
+    {
+      "group": "perp",
+      "coin": "VIRTUAL",
+      "symbol": "VIRTUAL",
+      "name": "VIRTUAL"
     },
     {
       "group": "perp",
@@ -287,6 +281,12 @@
       "coin": "LTC",
       "symbol": "LTC",
       "name": "LTC"
+    },
+    {
+      "group": "perp",
+      "coin": "BCH",
+      "symbol": "BCH",
+      "name": "BCH"
     },
     {
       "group": "perp",
