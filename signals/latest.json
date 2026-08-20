@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-20 12:48:29 UTC",
+  "generated_at": "2026-08-20 12:59:37 UTC",
   "timeframes": [
     "1h",
     "4h",
@@ -61,7 +61,7 @@
       "time": 1787227200,
       "index": 1079,
       "level": 98.0390909090909,
-      "close": 97.241,
+      "close": 97.267,
       "exceed_bars": 2,
       "timeframe": "4h",
       "group": "perp",
@@ -75,7 +75,7 @@
       "time": 1787227200,
       "index": 1079,
       "level": 0.6356196261682242,
-      "close": 0.64888,
+      "close": 0.64873,
       "exceed_bars": 3,
       "timeframe": "4h",
       "group": "perp",
@@ -89,7 +89,7 @@
       "time": 1787227200,
       "index": 1079,
       "level": 0.0028880754716981132,
-      "close": 0.003129,
+      "close": 0.003141,
       "exceed_bars": 4,
       "timeframe": "4h",
       "group": "perp",
@@ -103,7 +103,7 @@
       "time": 1787184000,
       "index": 179,
       "level": 0.07497978723404256,
-      "close": 0.08758,
+      "close": 0.08822,
       "exceed_bars": 2,
       "timeframe": "1d",
       "group": "perp",
@@ -117,7 +117,7 @@
       "time": 1787184000,
       "index": 179,
       "level": 0.4247832,
-      "close": 0.36246,
+      "close": 0.36033,
       "exceed_bars": 7,
       "timeframe": "1d",
       "group": "perp",
@@ -131,7 +131,7 @@
       "time": 1787184000,
       "index": 179,
       "level": 2.473875,
-      "close": 2.7131,
+      "close": 2.7372,
       "exceed_bars": 2,
       "timeframe": "1d",
       "group": "perp",
@@ -145,7 +145,7 @@
       "time": 1787184000,
       "index": 179,
       "level": 0.05875272727272727,
-      "close": 0.061275,
+      "close": 0.061559,
       "exceed_bars": 4,
       "timeframe": "1d",
       "group": "perp",
@@ -349,7 +349,7 @@
       "time": 1787184000,
       "index": 179,
       "level": 98.58938775510205,
-      "close": 97.305,
+      "close": 97.264,
       "timeframe": "1d",
       "group": "perp",
       "symbol": "AAVE",
@@ -375,7 +375,7 @@
       "time": 1787184000,
       "index": 179,
       "level": 1.5127000000000002,
-      "close": 1.4503,
+      "close": 1.4575,
       "timeframe": "1d",
       "group": "perp",
       "symbol": "PENDLE",
@@ -459,6 +459,17 @@
     },
     {
       "group": "perp",
+      "symbol": "ETH",
+      "coin": "ETH",
+      "name": "ETH",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
       "symbol": "HYPE",
       "coin": "HYPE",
       "name": "HYPE",
@@ -476,17 +487,6 @@
       "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "ETH",
-      "coin": "ETH",
-      "name": "ETH",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -542,28 +542,6 @@
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "ETH",
-      "coin": "ETH",
-      "name": "ETH",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "XRP",
-      "coin": "XRP",
-      "name": "XRP",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
       "events": [],
       "error": null
     },
@@ -606,12 +584,23 @@
     },
     {
       "group": "perp",
-      "symbol": "SOL",
-      "coin": "SOL",
-      "name": "SOL",
+      "symbol": "ETH",
+      "coin": "ETH",
+      "name": "ETH",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "XRP",
+      "coin": "XRP",
+      "name": "XRP",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
       "events": [],
       "error": null
     },
@@ -674,11 +663,22 @@
           "time": 1787184000,
           "index": 179,
           "level": 2.473875,
-          "close": 2.7131,
+          "close": 2.7372,
           "exceed_bars": 2,
           "timeframe": "1d"
         }
       ],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "SOL",
+      "coin": "SOL",
+      "name": "SOL",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
+      "events": [],
       "error": null
     },
     {
@@ -749,9 +749,9 @@
     },
     {
       "group": "perp",
-      "symbol": "PUMP",
-      "coin": "PUMP",
-      "name": "PUMP",
+      "symbol": "LIT",
+      "coin": "LIT",
+      "name": "LIT",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
@@ -760,12 +760,12 @@
     },
     {
       "group": "perp",
-      "symbol": "BNB",
-      "coin": "BNB",
-      "name": "BNB",
+      "symbol": "PUMP",
+      "coin": "PUMP",
+      "name": "PUMP",
       "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -782,12 +782,12 @@
     },
     {
       "group": "perp",
-      "symbol": "LIT",
-      "coin": "LIT",
-      "name": "LIT",
+      "symbol": "BNB",
+      "coin": "BNB",
+      "name": "BNB",
       "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
+      "timeframe": "4h",
+      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -828,22 +828,11 @@
           "time": 1787227200,
           "index": 1079,
           "level": 0.0028880754716981132,
-          "close": 0.003129,
+          "close": 0.003141,
           "exceed_bars": 4,
           "timeframe": "4h"
         }
       ],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "TRUMP",
-      "coin": "TRUMP",
-      "name": "TRUMP",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
-      "events": [],
       "error": null
     },
     {
@@ -881,12 +870,34 @@
     },
     {
       "group": "perp",
+      "symbol": "TRUMP",
+      "coin": "TRUMP",
+      "name": "TRUMP",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
       "symbol": "FARTCOIN",
       "coin": "FARTCOIN",
       "name": "FARTCOIN",
       "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "FARTCOIN",
+      "coin": "FARTCOIN",
+      "name": "FARTCOIN",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -903,13 +914,24 @@
     },
     {
       "group": "perp",
-      "symbol": "FARTCOIN",
-      "coin": "FARTCOIN",
-      "name": "FARTCOIN",
+      "symbol": "TAO",
+      "coin": "TAO",
+      "name": "TAO",
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
-      "events": [],
+      "events": [
+        {
+          "kind": "trend_touch",
+          "label": "支撐趨勢線觸碰",
+          "type": "support",
+          "time": 1787112000,
+          "index": 1071,
+          "level": 189.70207386363634,
+          "close": 191.88,
+          "timeframe": "4h"
+        }
+      ],
       "error": null
     },
     {
@@ -957,39 +979,6 @@
     },
     {
       "group": "perp",
-      "symbol": "TAO",
-      "coin": "TAO",
-      "name": "TAO",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
-      "events": [
-        {
-          "kind": "trend_touch",
-          "label": "支撐趨勢線觸碰",
-          "type": "support",
-          "time": 1787112000,
-          "index": 1071,
-          "level": 189.70207386363634,
-          "close": 191.88,
-          "timeframe": "4h"
-        }
-      ],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "SUI",
-      "coin": "SUI",
-      "name": "SUI",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
       "symbol": "TRUMP",
       "coin": "TRUMP",
       "name": "TRUMP",
@@ -1005,6 +994,17 @@
       "coin": "SUI",
       "name": "SUI",
       "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "SUI",
+      "coin": "SUI",
+      "name": "SUI",
+      "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
       "events": [],
@@ -1040,17 +1040,6 @@
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "WLD",
-      "coin": "WLD",
-      "name": "WLD",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -1078,6 +1067,17 @@
     },
     {
       "group": "perp",
+      "symbol": "WLD",
+      "coin": "WLD",
+      "name": "WLD",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
       "symbol": "NEAR",
       "coin": "NEAR",
       "name": "NEAR",
@@ -1095,17 +1095,6 @@
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "ENA",
-      "coin": "ENA",
-      "name": "ENA",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -1137,8 +1126,8 @@
       "coin": "XMR",
       "name": "XMR",
       "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
+      "timeframe": "1d",
+      "bars": 180,
       "events": [],
       "error": null
     },
@@ -1148,19 +1137,8 @@
       "coin": "XMR",
       "name": "XMR",
       "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "CASHCAT",
-      "coin": "CASHCAT",
-      "name": "CASHCAT",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 41,
+      "timeframe": "4h",
+      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -1181,8 +1159,30 @@
       "coin": "CASHCAT",
       "name": "CASHCAT",
       "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 41,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "CASHCAT",
+      "coin": "CASHCAT",
+      "name": "CASHCAT",
+      "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 969,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "ENA",
+      "coin": "ENA",
+      "name": "ENA",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -1202,8 +1202,30 @@
           "time": 1787184000,
           "index": 179,
           "level": 98.58938775510205,
-          "close": 97.305,
+          "close": 97.264,
           "timeframe": "1d"
+        }
+      ],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "WLD",
+      "coin": "WLD",
+      "name": "WLD",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
+      "events": [
+        {
+          "kind": "trend_touch",
+          "label": "阻力趨勢線觸碰",
+          "type": "resistance",
+          "time": 1787223600,
+          "index": 4318,
+          "level": 0.3676574197860963,
+          "close": 0.36397,
+          "timeframe": "1h"
         }
       ],
       "error": null
@@ -1234,7 +1256,7 @@
           "time": 1787227200,
           "index": 1079,
           "level": 98.0390909090909,
-          "close": 97.241,
+          "close": 97.267,
           "exceed_bars": 2,
           "timeframe": "4h"
         }
@@ -1243,50 +1265,6 @@
     },
     {
       "group": "perp",
-      "symbol": "WLD",
-      "coin": "WLD",
-      "name": "WLD",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [
-        {
-          "kind": "trend_touch",
-          "label": "阻力趨勢線觸碰",
-          "type": "resistance",
-          "time": 1787223600,
-          "index": 4318,
-          "level": 0.3676574197860963,
-          "close": 0.36397,
-          "timeframe": "1h"
-        }
-      ],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "ADA",
-      "coin": "ADA",
-      "name": "ADA",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "XMR",
-      "coin": "XMR",
-      "name": "XMR",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
       "symbol": "ADA",
       "coin": "ADA",
       "name": "ADA",
@@ -1298,20 +1276,9 @@
     },
     {
       "group": "perp",
-      "symbol": "UNI",
-      "coin": "UNI",
-      "name": "UNI",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "UNI",
-      "coin": "UNI",
-      "name": "UNI",
+      "symbol": "ADA",
+      "coin": "ADA",
+      "name": "ADA",
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
@@ -1342,6 +1309,39 @@
     },
     {
       "group": "perp",
+      "symbol": "XMR",
+      "coin": "XMR",
+      "name": "XMR",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "UNI",
+      "coin": "UNI",
+      "name": "UNI",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "UNI",
+      "coin": "UNI",
+      "name": "UNI",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
       "symbol": "ONDO",
       "coin": "ONDO",
       "name": "ONDO",
@@ -1359,28 +1359,6 @@
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "AAVE",
-      "coin": "AAVE",
-      "name": "AAVE",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "AVAX",
-      "coin": "AVAX",
-      "name": "AVAX",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
       "events": [],
       "error": null
     },
@@ -1408,6 +1386,39 @@
     },
     {
       "group": "perp",
+      "symbol": "AAVE",
+      "coin": "AAVE",
+      "name": "AAVE",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "AVAX",
+      "coin": "AVAX",
+      "name": "AVAX",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "CRV",
+      "coin": "CRV",
+      "name": "CRV",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
       "symbol": "ADA",
       "coin": "ADA",
       "name": "ADA",
@@ -1423,30 +1434,8 @@
       "coin": "CRV",
       "name": "CRV",
       "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "CRV",
-      "coin": "CRV",
-      "name": "CRV",
-      "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "PAXG",
-      "coin": "PAXG",
-      "name": "PAXG",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -1463,9 +1452,9 @@
     },
     {
       "group": "perp",
-      "symbol": "PAXG",
-      "coin": "PAXG",
-      "name": "PAXG",
+      "symbol": "PENGU",
+      "coin": "PENGU",
+      "name": "PENGU",
       "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
@@ -1480,17 +1469,6 @@
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "PENGU",
-      "coin": "PENGU",
-      "name": "PENGU",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
       "events": [],
       "error": null
     },
@@ -1507,23 +1485,23 @@
     },
     {
       "group": "perp",
-      "symbol": "CRV",
-      "coin": "CRV",
-      "name": "CRV",
+      "symbol": "PAXG",
+      "coin": "PAXG",
+      "name": "PAXG",
       "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
+      "timeframe": "1d",
+      "bars": 180,
       "events": [],
       "error": null
     },
     {
       "group": "perp",
-      "symbol": "VVV",
-      "coin": "VVV",
-      "name": "VVV",
+      "symbol": "PAXG",
+      "coin": "PAXG",
+      "name": "PAXG",
       "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
+      "timeframe": "4h",
+      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -1540,23 +1518,23 @@
     },
     {
       "group": "perp",
-      "symbol": "VVV",
-      "coin": "VVV",
-      "name": "VVV",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
       "symbol": "ASTER",
       "coin": "ASTER",
       "name": "ASTER",
       "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "CRV",
+      "coin": "CRV",
+      "name": "CRV",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -1586,7 +1564,7 @@
           "time": 1787227200,
           "index": 1079,
           "level": 0.6356196261682242,
-          "close": 0.64888,
+          "close": 0.64873,
           "exceed_bars": 3,
           "timeframe": "4h"
         }
@@ -1595,20 +1573,9 @@
     },
     {
       "group": "perp",
-      "symbol": "PAXG",
-      "coin": "PAXG",
-      "name": "PAXG",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "MON",
-      "coin": "MON",
-      "name": "MON",
+      "symbol": "VVV",
+      "coin": "VVV",
+      "name": "VVV",
       "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
@@ -1617,9 +1584,9 @@
     },
     {
       "group": "perp",
-      "symbol": "MON",
-      "coin": "MON",
-      "name": "MON",
+      "symbol": "VVV",
+      "coin": "VVV",
+      "name": "VVV",
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
@@ -1639,12 +1606,34 @@
     },
     {
       "group": "perp",
-      "symbol": "ARB",
-      "coin": "ARB",
-      "name": "ARB",
+      "symbol": "MON",
+      "coin": "MON",
+      "name": "MON",
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "MON",
+      "coin": "MON",
+      "name": "MON",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "PAXG",
+      "coin": "PAXG",
+      "name": "PAXG",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -1664,11 +1653,22 @@
           "time": 1787184000,
           "index": 179,
           "level": 0.07497978723404256,
-          "close": 0.08758,
+          "close": 0.08822,
           "exceed_bars": 2,
           "timeframe": "1d"
         }
       ],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "ARB",
+      "coin": "ARB",
+      "name": "ARB",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
       "error": null
     },
     {
@@ -1739,23 +1739,12 @@
     },
     {
       "group": "perp",
-      "symbol": "MON",
-      "coin": "MON",
-      "name": "MON",
+      "symbol": "ARB",
+      "coin": "ARB",
+      "name": "ARB",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "XPL",
-      "coin": "XPL",
-      "name": "XPL",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
       "events": [],
       "error": null
     },
@@ -1772,20 +1761,20 @@
     },
     {
       "group": "perp",
-      "symbol": "ARB",
-      "coin": "ARB",
-      "name": "ARB",
+      "symbol": "XPL",
+      "coin": "XPL",
+      "name": "XPL",
       "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
+      "timeframe": "1d",
+      "bars": 180,
       "events": [],
       "error": null
     },
     {
       "group": "perp",
-      "symbol": "ETHFI",
-      "coin": "ETHFI",
-      "name": "ETHFI",
+      "symbol": "MON",
+      "coin": "MON",
+      "name": "MON",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
@@ -1800,6 +1789,17 @@
       "source": "hyperliquid",
       "timeframe": "1d",
       "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "ETHFI",
+      "coin": "ETHFI",
+      "name": "ETHFI",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -1838,23 +1838,23 @@
     },
     {
       "group": "perp",
-      "symbol": "VIRTUAL",
-      "coin": "VIRTUAL",
-      "name": "VIRTUAL",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
       "symbol": "ZRO",
       "coin": "ZRO",
       "name": "ZRO",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "VIRTUAL",
+      "coin": "VIRTUAL",
+      "name": "VIRTUAL",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
       "events": [],
       "error": null
     },
@@ -1874,7 +1874,7 @@
           "time": 1787184000,
           "index": 179,
           "level": 1.5127000000000002,
-          "close": 1.4503,
+          "close": 1.4575,
           "timeframe": "1d"
         }
       ],
@@ -1970,12 +1970,12 @@
     },
     {
       "group": "perp",
-      "symbol": "PENDLE",
-      "coin": "PENDLE",
-      "name": "PENDLE",
+      "symbol": "BCH",
+      "coin": "BCH",
+      "name": "BCH",
       "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
+      "timeframe": "4h",
+      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -1992,20 +1992,20 @@
     },
     {
       "group": "perp",
-      "symbol": "BCH",
-      "coin": "BCH",
-      "name": "BCH",
+      "symbol": "VIRTUAL",
+      "coin": "VIRTUAL",
+      "name": "VIRTUAL",
       "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
     {
       "group": "perp",
-      "symbol": "VIRTUAL",
-      "coin": "VIRTUAL",
-      "name": "VIRTUAL",
+      "symbol": "PENDLE",
+      "coin": "PENDLE",
+      "name": "PENDLE",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
@@ -2051,8 +2051,8 @@
       "coin": "BOME",
       "name": "BOME",
       "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
+      "timeframe": "1d",
+      "bars": 180,
       "events": [],
       "error": null
     },
@@ -2062,8 +2062,19 @@
       "coin": "BOME",
       "name": "BOME",
       "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "KAITO",
+      "coin": "KAITO",
+      "name": "KAITO",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -2072,17 +2083,6 @@
       "symbol": "XLM",
       "coin": "XLM",
       "name": "XLM",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "BCH",
-      "coin": "BCH",
-      "name": "BCH",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
@@ -2105,7 +2105,7 @@
           "time": 1787184000,
           "index": 179,
           "level": 0.4247832,
-          "close": 0.36246,
+          "close": 0.36033,
           "exceed_bars": 7,
           "timeframe": "1d"
         }
@@ -2125,12 +2125,23 @@
     },
     {
       "group": "perp",
-      "symbol": "KAITO",
-      "coin": "KAITO",
-      "name": "KAITO",
+      "symbol": "LTC",
+      "coin": "LTC",
+      "name": "LTC",
       "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
+      "timeframe": "1h",
+      "bars": 4320,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "BOME",
+      "coin": "BOME",
+      "name": "BOME",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
       "events": [],
       "error": null
     },
@@ -2147,20 +2158,9 @@
     },
     {
       "group": "perp",
-      "symbol": "GRAM",
-      "coin": "GRAM",
-      "name": "GRAM",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 296,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "BOME",
-      "coin": "BOME",
-      "name": "BOME",
+      "symbol": "BCH",
+      "coin": "BCH",
+      "name": "BCH",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
@@ -2184,86 +2184,30 @@
       "coin": "GRAM",
       "name": "GRAM",
       "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 296,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "JUP",
+      "coin": "JUP",
+      "name": "JUP",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "GRAM",
+      "coin": "GRAM",
+      "name": "GRAM",
+      "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 1180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "JUP",
-      "coin": "JUP",
-      "name": "JUP",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "JUP",
-      "coin": "JUP",
-      "name": "JUP",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "LTC",
-      "coin": "LTC",
-      "name": "LTC",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 4320,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "WLFI",
-      "coin": "WLFI",
-      "name": "WLFI",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [
-        {
-          "kind": "trend_exceed",
-          "label": "阻力趨勢線超出",
-          "type": "resistance",
-          "time": 1787184000,
-          "index": 179,
-          "level": 0.05875272727272727,
-          "close": 0.061275,
-          "exceed_bars": 4,
-          "timeframe": "1d"
-        }
-      ],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "CHIP",
-      "coin": "CHIP",
-      "name": "CHIP",
-      "source": "hyperliquid",
-      "timeframe": "1h",
-      "bars": 2891,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "WLFI",
-      "coin": "WLFI",
-      "name": "WLFI",
-      "source": "hyperliquid",
-      "timeframe": "4h",
-      "bars": 1080,
       "events": [],
       "error": null
     },
@@ -2291,20 +2235,9 @@
     },
     {
       "group": "perp",
-      "symbol": "ACE",
-      "coin": "ACE",
-      "name": "ACE",
-      "source": "hyperliquid",
-      "timeframe": "1d",
-      "bars": 180,
-      "events": [],
-      "error": null
-    },
-    {
-      "group": "perp",
-      "symbol": "ACE",
-      "coin": "ACE",
-      "name": "ACE",
+      "symbol": "JUP",
+      "coin": "JUP",
+      "name": "JUP",
       "source": "hyperliquid",
       "timeframe": "4h",
       "bars": 1080,
@@ -2317,8 +2250,64 @@
       "coin": "WLFI",
       "name": "WLFI",
       "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [
+        {
+          "kind": "trend_exceed",
+          "label": "阻力趨勢線超出",
+          "type": "resistance",
+          "time": 1787184000,
+          "index": 179,
+          "level": 0.05875272727272727,
+          "close": 0.061559,
+          "exceed_bars": 4,
+          "timeframe": "1d"
+        }
+      ],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "WLFI",
+      "coin": "WLFI",
+      "name": "WLFI",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "AERO",
+      "coin": "AERO",
+      "name": "AERO",
+      "source": "hyperliquid",
+      "timeframe": "4h",
+      "bars": 1080,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "AERO",
+      "coin": "AERO",
+      "name": "AERO",
+      "source": "hyperliquid",
+      "timeframe": "1d",
+      "bars": 180,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "CHIP",
+      "coin": "CHIP",
+      "name": "CHIP",
+      "source": "hyperliquid",
       "timeframe": "1h",
-      "bars": 4320,
+      "bars": 2891,
       "events": [],
       "error": null
     },
@@ -2346,9 +2335,20 @@
     },
     {
       "group": "perp",
-      "symbol": "ACE",
-      "coin": "ACE",
-      "name": "ACE",
+      "symbol": "WLFI",
+      "coin": "WLFI",
+      "name": "WLFI",
+      "source": "hyperliquid",
+      "timeframe": "1h",
+      "bars": 4320,
+      "events": [],
+      "error": null
+    },
+    {
+      "group": "perp",
+      "symbol": "AERO",
+      "coin": "AERO",
+      "name": "AERO",
       "source": "hyperliquid",
       "timeframe": "1h",
       "bars": 4320,
