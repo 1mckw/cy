@@ -32,27 +32,46 @@ HTTP_TIMEOUT = 15
 HL_INTERVALS = {"1h": "1h", "4h": "4h", "1d": "1d"}
 
 TIMEFRAMES: dict[str, dict[str, Any]] = {
+    # Daily-bar equivalents: 10d / 20d / 60d / 200d → TF bars (1H×24, 4H×6, 1D×1)
     "1h": {
         "hl_interval": "1h",
-        "bars": 4320,
-        "chart_bars": 4320,
-        "touch_window": 480,
-        "fresh_bars": 48,
+        "bars": 4800,
+        "chart_bars": 4800,
+        "touch_after_bars": 240,   # > 10 日 K
+        "late_after_bars": 480,    # > 20 日 K
+        "late_min_bars": 1440,     # ≥ 60 日 K
+        "near_min_bars": 1440,     # ≥ 60 日 K
+        "near_max_bars": 4800,     # ≤ 200 日 K
+        "touch_fresh_bars": 2,     # 最近 2 根
+        "late_fresh_bars": 240,    # 最近 10 日 K
+        "fresh_bars": 2,           # 趨勢線等
         "label": "1H",
     },
     "4h": {
         "hl_interval": "4h",
-        "bars": 1080,
-        "chart_bars": 1080,
-        "touch_window": 120,
-        "fresh_bars": 12,
+        "bars": 1200,
+        "chart_bars": 1200,
+        "touch_after_bars": 60,
+        "late_after_bars": 120,
+        "late_min_bars": 360,
+        "near_min_bars": 360,
+        "near_max_bars": 1200,
+        "touch_fresh_bars": 2,
+        "late_fresh_bars": 60,
+        "fresh_bars": 2,
         "label": "4H",
     },
     "1d": {
         "hl_interval": "1d",
-        "bars": 180,
-        "chart_bars": 180,
-        "touch_window": 20,
+        "bars": 200,
+        "chart_bars": 200,
+        "touch_after_bars": 10,
+        "late_after_bars": 20,
+        "late_min_bars": 60,
+        "near_min_bars": 60,
+        "near_max_bars": 200,
+        "touch_fresh_bars": 2,
+        "late_fresh_bars": 10,
         "fresh_bars": 2,
         "label": "1D",
     },
@@ -69,7 +88,7 @@ TOUCH_WINDOW_BARS = ardr.TOUCH_WINDOW_BARS
 FRESH_BARS = ardr.FRESH_BARS
 
 detect_signals = ardr.detect_signals
-collect_late_ar_dr_touches = ardr.collect_late_ar_dr_touches
+collect_ar_dr_touches = ardr.collect_ar_dr_touches
 collect_late_ar_dr_near_misses = ardr.collect_late_ar_dr_near_misses
 fresh_range = ardr.fresh_range
 
@@ -84,7 +103,13 @@ find_trend_exceed = tl.find_trend_exceed
 line_end_at_break = tl.line_end_at_break
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; Crypto-Alerts/1.0)"}
-KIND_ORDER = {"trend_exceed": 0, "ar_dr_touch": 1, "ar_dr_near": 2, "trend_touch": 3}
+KIND_ORDER = {
+    "trend_exceed": 0,
+    "ar_dr_touch": 1,
+    "ar_dr_late": 2,
+    "ar_dr_near": 3,
+    "trend_touch": 4,
+}
 
 
 def chart_key(group: str, symbol: str, timeframe: str) -> str:
@@ -307,13 +332,33 @@ def scan_job(job: dict[str, str]) -> dict:
     name = job["name"]
     timeframe = job["timeframe"]
     cfg = TIMEFRAMES[timeframe]
-    touch_window = int(cfg["touch_window"])
+    touch_after = int(cfg["touch_after_bars"])
+    late_min = int(cfg["late_min_bars"])
+    late_after = int(cfg["late_after_bars"])
+    near_min = int(cfg["near_min_bars"])
+    near_max = int(cfg["near_max_bars"])
+    touch_fresh = int(cfg["touch_fresh_bars"])
+    late_fresh = int(cfg["late_fresh_bars"])
     fresh_bars = int(cfg["fresh_bars"])
     try:
         candles = with_retries(lambda: fetch_hyperliquid(coin, timeframe))
         signals = detect_signals(candles)
-        late = collect_late_ar_dr_touches(candles, signals, touch_window, fresh_bars)
-        near = collect_late_ar_dr_near_misses(candles, signals, touch_window, fresh_bars)
+        late = collect_ar_dr_touches(
+            candles,
+            signals,
+            touch_after_bars=touch_after,
+            late_min_bars=late_min,
+            late_after_bars=late_after,
+            touch_fresh_bars=touch_fresh,
+            late_fresh_bars=late_fresh,
+        )
+        near = collect_late_ar_dr_near_misses(
+            candles,
+            signals,
+            fresh_bars=touch_fresh,
+            near_min_bars=near_min,
+            near_max_bars=near_max,
+        )
         lines = build_auto_trend_lines(candles)
         trend = collect_trend_touches(candles, lines, fresh_bars)
         exceed = collect_trend_exceeds(candles, lines)
@@ -395,6 +440,7 @@ def build_symbol_catalog(results: list[dict], charts: dict) -> list[dict]:
 def render_html(payload: dict) -> str:
     hits = payload["hits"]
     ar_dr = [h for h in hits if h["kind"] == "ar_dr_touch"]
+    ar_late = [h for h in hits if h["kind"] == "ar_dr_late"]
     ar_near = [h for h in hits if h["kind"] == "ar_dr_near"]
     trend = [h for h in hits if h["kind"] == "trend_touch"]
     exceed = [h for h in hits if h["kind"] == "trend_exceed"]
@@ -621,6 +667,7 @@ def render_html(payload: dict) -> str:
     <div class="cards">
       <div class="card"><div class="lbl">掃描 OK</div><div class="val">{c['ok']}/{c['jobs']}</div></div>
       <div class="card"><div class="lbl">AR/DR 觸碰</div><div class="val">{c['ar_dr_touch']}</div></div>
+      <div class="card"><div class="lbl">AR/DR 晚觸碰</div><div class="val">{c['ar_dr_late']}</div></div>
       <div class="card"><div class="lbl">AR/DR 接近</div><div class="val">{c['ar_dr_near']}</div></div>
       <div class="card"><div class="lbl">趨勢線觸碰</div><div class="val">{c['trend_touch']}</div></div>
       <div class="card"><div class="lbl">趨勢線超出</div><div class="val">{c['trend_exceed']}</div></div>
@@ -639,12 +686,17 @@ def render_html(payload: dict) -> str:
       <th>類型</th><th>週期</th><th>池</th><th>代碼</th><th>名稱</th><th class="num">價位</th><th class="num">根數</th><th>時間</th>
     </tr></thead><tbody data-section="exceed">{rows(exceed, "目前無超出信號", 8, row_exceed)}</tbody></table></div>
 
-    <h2>AR / DR 觸碰（超過各週期門檻根數後）</h2>
+    <h2>AR / DR 觸碰（超過 10 根日 K 後 · 最近 2 根）</h2>
     <div class="panel"><table><thead><tr>
       <th>類型</th><th>週期</th><th>池</th><th>代碼</th><th>名稱</th><th class="num">價位</th><th class="num">根數</th><th>時間</th>
     </tr></thead><tbody data-section="ar_dr">{rows(ar_dr, "目前無 AR/DR 觸碰", 8, row_ar_dr)}</tbody></table></div>
 
-    <h2>AR / DR 接近未觸</h2>
+    <h2>AR / DR 晚觸碰（最近 10 根日 K 內 · 超過 20 根後 · 根數 ≥ 60）</h2>
+    <div class="panel"><table><thead><tr>
+      <th>類型</th><th>週期</th><th>池</th><th>代碼</th><th>名稱</th><th class="num">價位</th><th class="num">根數</th><th>時間</th>
+    </tr></thead><tbody data-section="ar_late">{rows(ar_late, "目前無 AR/DR 晚觸碰", 8, row_ar_dr)}</tbody></table></div>
+
+    <h2>AR / DR 接近未觸（200 根日 K 內 · 根數 ≥ 60 · 誤差 0～1%）</h2>
     <div class="panel"><table><thead><tr>
       <th>類型</th><th>週期</th><th>池</th><th>代碼</th><th>名稱</th><th class="num">價位</th><th class="num">差距</th><th class="num">根數</th><th>時間</th>
     </tr></thead><tbody data-section="ar_near">{rows(ar_near, "目前無接近未觸", 9, row_ar_near)}</tbody></table></div>
@@ -777,6 +829,7 @@ def _main_impl() -> int:
             "ok": ok,
             "errors": len(jobs) - ok,
             "ar_dr_touch": sum(1 for h in hits if h["kind"] == "ar_dr_touch"),
+            "ar_dr_late": sum(1 for h in hits if h["kind"] == "ar_dr_late"),
             "ar_dr_near": sum(1 for h in hits if h["kind"] == "ar_dr_near"),
             "trend_touch": sum(1 for h in hits if h["kind"] == "trend_touch"),
             "trend_exceed": sum(1 for h in hits if h["kind"] == "trend_exceed"),

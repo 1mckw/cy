@@ -121,6 +121,7 @@
 
   function typeLabel(type, kind) {
     if (kind === "ar_dr_touch") return type || "AR/DR";
+    if (kind === "ar_dr_late") return (type || "AR/DR") + " 晚觸碰";
     if (kind === "ar_dr_near") return (type || "AR/DR") + " 接近未觸";
     if (kind === "trend_exceed") {
       if (type === "resistance") return "阻力超出";
@@ -227,7 +228,7 @@
   }
 
   function isRayAlert(kind) {
-    return kind === "ar_dr_touch" || kind === "ar_dr_near";
+    return kind === "ar_dr_touch" || kind === "ar_dr_late" || kind === "ar_dr_near";
   }
 
   function trendLineMatchesAlert(line, alertInfo) {
