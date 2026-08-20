@@ -224,6 +224,12 @@
     },
     {
       "group": "perp",
+      "coin": "VIRTUAL",
+      "symbol": "VIRTUAL",
+      "name": "VIRTUAL"
+    },
+    {
+      "group": "perp",
       "coin": "PENDLE",
       "symbol": "PENDLE",
       "name": "PENDLE"
@@ -236,9 +242,9 @@
     },
     {
       "group": "perp",
-      "coin": "VIRTUAL",
-      "symbol": "VIRTUAL",
-      "name": "VIRTUAL"
+      "coin": "MET",
+      "symbol": "MET",
+      "name": "MET"
     },
     {
       "group": "perp",
@@ -254,9 +260,9 @@
     },
     {
       "group": "perp",
-      "coin": "MET",
-      "symbol": "MET",
-      "name": "MET"
+      "coin": "XLM",
+      "symbol": "XLM",
+      "name": "XLM"
     },
     {
       "group": "perp",
@@ -272,33 +278,27 @@
     },
     {
       "group": "perp",
-      "coin": "XLM",
-      "symbol": "XLM",
-      "name": "XLM"
-    },
-    {
-      "group": "perp",
       "coin": "ICP",
       "symbol": "ICP",
       "name": "ICP"
     },
     {
       "group": "perp",
-      "coin": "kBONK",
-      "symbol": "kBONK",
-      "name": "kBONK"
+      "coin": "ACE",
+      "symbol": "ACE",
+      "name": "ACE"
     },
     {
       "group": "perp",
-      "coin": "AERO",
-      "symbol": "AERO",
-      "name": "AERO"
+      "coin": "GRAM",
+      "symbol": "GRAM",
+      "name": "GRAM"
     },
     {
       "group": "perp",
-      "coin": "LDO",
-      "symbol": "LDO",
-      "name": "LDO"
+      "coin": "CHIP",
+      "symbol": "CHIP",
+      "name": "CHIP"
     }
   ]
 }
