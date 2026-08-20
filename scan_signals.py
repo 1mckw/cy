@@ -37,6 +37,7 @@ TIMEFRAMES: dict[str, dict[str, Any]] = {
         "bars": 4320,
         "chart_bars": 4320,
         "touch_window": 480,
+        "fresh_bars": 48,
         "label": "1H",
     },
     "4h": {
@@ -44,6 +45,7 @@ TIMEFRAMES: dict[str, dict[str, Any]] = {
         "bars": 1080,
         "chart_bars": 1080,
         "touch_window": 120,
+        "fresh_bars": 12,
         "label": "4H",
     },
     "1d": {
@@ -51,6 +53,7 @@ TIMEFRAMES: dict[str, dict[str, Any]] = {
         "bars": 180,
         "chart_bars": 180,
         "touch_window": 20,
+        "fresh_bars": 2,
         "label": "1D",
     },
 }
@@ -156,10 +159,10 @@ def with_retries(fn, retries: int | None = None, pause: float | None = None):
     raise last_err  # type: ignore[misc]
 
 
-def collect_trend_touches(candles: list[dict], lines: list[dict]) -> list[dict]:
+def collect_trend_touches(candles: list[dict], lines: list[dict], fresh_bars: int = FRESH_BARS) -> list[dict]:
     if not candles:
         return []
-    lo, last = fresh_range(len(candles))
+    lo, last = fresh_range(len(candles), fresh_bars)
     hits = []
     for line in lines:
         if check_line_invalidation(candles, line):
@@ -305,13 +308,14 @@ def scan_job(job: dict[str, str]) -> dict:
     timeframe = job["timeframe"]
     cfg = TIMEFRAMES[timeframe]
     touch_window = int(cfg["touch_window"])
+    fresh_bars = int(cfg["fresh_bars"])
     try:
         candles = with_retries(lambda: fetch_hyperliquid(coin, timeframe))
         signals = detect_signals(candles)
-        late = collect_late_ar_dr_touches(candles, signals, touch_window)
-        near = collect_late_ar_dr_near_misses(candles, signals, touch_window)
+        late = collect_late_ar_dr_touches(candles, signals, touch_window, fresh_bars)
+        near = collect_late_ar_dr_near_misses(candles, signals, touch_window, fresh_bars)
         lines = build_auto_trend_lines(candles)
-        trend = collect_trend_touches(candles, lines)
+        trend = collect_trend_touches(candles, lines, fresh_bars)
         exceed = collect_trend_exceeds(candles, lines)
         events = late + near + trend + exceed
         for ev in events:

@@ -172,19 +172,22 @@ def primary_wick_ray(rays: dict[str, Any], sig_type: str) -> dict[str, Any]:
     return rays["upper"] if sig_type == "AR" else rays["lower"]
 
 
-def fresh_range(n: int) -> tuple[int, int]:
+def fresh_range(n: int, fresh_bars: int = FRESH_BARS) -> tuple[int, int]:
     last = n - 1
-    lo = max(0, last - (FRESH_BARS - 1))
+    lo = max(0, last - (fresh_bars - 1))
     return lo, last
 
 
 def collect_late_ar_dr_touches(
-    candles: list[dict], signals: list[dict], touch_window_bars: int = TOUCH_WINDOW_BARS
+    candles: list[dict],
+    signals: list[dict],
+    touch_window_bars: int = TOUCH_WINDOW_BARS,
+    fresh_bars: int = FRESH_BARS,
 ) -> list[dict]:
     """Report primary wick touch after >touch_window_bars when touch bar is fresh."""
     if not candles:
         return []
-    lo, last = fresh_range(len(candles))
+    lo, last = fresh_range(len(candles), fresh_bars)
     hits: list[dict] = []
     for sig in signals:
         rays = resolve_signal_rays(candles, sig)
@@ -232,12 +235,15 @@ def wick_near_miss(bar: dict, level: float, is_upper: bool) -> tuple[bool, float
 
 
 def collect_late_ar_dr_near_misses(
-    candles: list[dict], signals: list[dict], touch_window_bars: int = TOUCH_WINDOW_BARS
+    candles: list[dict],
+    signals: list[dict],
+    touch_window_bars: int = TOUCH_WINDOW_BARS,
+    fresh_bars: int = FRESH_BARS,
 ) -> list[dict]:
     """Report fresh bars after >touch_window where primary wick nears but does not touch."""
     if not candles:
         return []
-    lo, last = fresh_range(len(candles))
+    lo, last = fresh_range(len(candles), fresh_bars)
     hits: list[dict] = []
     for sig in signals:
         rays = resolve_signal_rays(candles, sig)
