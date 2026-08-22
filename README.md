@@ -1,6 +1,6 @@
-# Crypto AR/DR Touch Alerts
+# Crypto AR/AD Touch Alerts
 
-GitHub Pages 每小時掃描 **Hyperliquid 永續合約 24h 交易額 TOP50**，輸出 AR/DR 與趨勢線觸碰報告。
+GitHub Pages 每小時掃描 **Hyperliquid 永續合約 24h 交易額 TOP50**，輸出 AR/AD 與趨勢線觸碰報告。
 
 - **商品池排名**：Hyperliquid `metaAndAssetCtxs`（24h notional volume）
 - **K 線掃描**：Hyperliquid `candleSnapshot`（單次最多 5000 根）
@@ -29,9 +29,9 @@ GitHub Pages 每小時掃描 **Hyperliquid 永續合約 24h 交易額 TOP50**，
 
 蠟燭圖資料來自 Hyperliquid；彈窗優先本地 pack，備援 **TradingView BYBIT 合約**。
 
-## AR/DR 規則
+## AR/AD 規則
 
-| | AR | DR |
+| | AR | AD |
 |---|----|----|
 | 觸發 | 急跌後反轉陽線 | 急漲後反轉陰線 |
 | 射線 | 信號 K 上下引線各向右延伸，碰到即停 |
@@ -39,7 +39,7 @@ GitHub Pages 每小時掃描 **Hyperliquid 永續合約 24h 交易額 TOP50**，
 | **晚觸碰** | 主射線首次觸碰根數 **≥ 60**（且 >20），且發生在 **最近 10 根日 K** 內 |
 | **接近未觸** | 主射線仍有效；根數 **60～200** 日 K 內；引線距射線 **0～1%** 未碰到 |
 
-主射線：AR→上引線（high），DR→下引線（low）。日 K 門檻依週期換算（1H×24、4H×6）。
+主射線：AR→上引線（high），AD→下引線（low）。日 K 門檻依週期換算（1H×24、4H×6）。
 
 **趨勢線：** 至少 3 觸點；最多 2 條上升支撐 + 2 條下降阻力；觸點較少者圖上 50% 透明；急漲/跌貫穿 grace 2 根 K。
 
