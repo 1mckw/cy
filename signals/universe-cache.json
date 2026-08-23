@@ -80,6 +80,12 @@
     },
     {
       "group": "perp",
+      "coin": "kPEPE",
+      "symbol": "kPEPE",
+      "name": "kPEPE"
+    },
+    {
+      "group": "perp",
       "coin": "XMR",
       "symbol": "XMR",
       "name": "XMR"
@@ -92,18 +98,6 @@
     },
     {
       "group": "perp",
-      "coin": "UNI",
-      "symbol": "UNI",
-      "name": "UNI"
-    },
-    {
-      "group": "perp",
-      "coin": "kPEPE",
-      "symbol": "kPEPE",
-      "name": "kPEPE"
-    },
-    {
-      "group": "perp",
       "coin": "CRV",
       "symbol": "CRV",
       "name": "CRV"
@@ -113,6 +107,12 @@
       "coin": "LINK",
       "symbol": "LINK",
       "name": "LINK"
+    },
+    {
+      "group": "perp",
+      "coin": "UNI",
+      "symbol": "UNI",
+      "name": "UNI"
     },
     {
       "group": "perp",
@@ -134,21 +134,9 @@
     },
     {
       "group": "perp",
-      "coin": "TAO",
-      "symbol": "TAO",
-      "name": "TAO"
-    },
-    {
-      "group": "perp",
       "coin": "XPL",
       "symbol": "XPL",
       "name": "XPL"
-    },
-    {
-      "group": "perp",
-      "coin": "MON",
-      "symbol": "MON",
-      "name": "MON"
     },
     {
       "group": "perp",
@@ -161,6 +149,18 @@
       "coin": "VVV",
       "symbol": "VVV",
       "name": "VVV"
+    },
+    {
+      "group": "perp",
+      "coin": "MON",
+      "symbol": "MON",
+      "name": "MON"
+    },
+    {
+      "group": "perp",
+      "coin": "TAO",
+      "symbol": "TAO",
+      "name": "TAO"
     },
     {
       "group": "perp",
@@ -182,27 +182,15 @@
     },
     {
       "group": "perp",
-      "coin": "CASHCAT",
-      "symbol": "CASHCAT",
-      "name": "CASHCAT"
-    },
-    {
-      "group": "perp",
       "coin": "ETHFI",
       "symbol": "ETHFI",
       "name": "ETHFI"
     },
     {
       "group": "perp",
-      "coin": "kBONK",
-      "symbol": "kBONK",
-      "name": "kBONK"
-    },
-    {
-      "group": "perp",
-      "coin": "XLM",
-      "symbol": "XLM",
-      "name": "XLM"
+      "coin": "CASHCAT",
+      "symbol": "CASHCAT",
+      "name": "CASHCAT"
     },
     {
       "group": "perp",
@@ -212,9 +200,15 @@
     },
     {
       "group": "perp",
-      "coin": "PENGU",
-      "symbol": "PENGU",
-      "name": "PENGU"
+      "coin": "XLM",
+      "symbol": "XLM",
+      "name": "XLM"
+    },
+    {
+      "group": "perp",
+      "coin": "kBONK",
+      "symbol": "kBONK",
+      "name": "kBONK"
     },
     {
       "group": "perp",
@@ -230,15 +224,15 @@
     },
     {
       "group": "perp",
-      "coin": "WLFI",
-      "symbol": "WLFI",
-      "name": "WLFI"
+      "coin": "PENGU",
+      "symbol": "PENGU",
+      "name": "PENGU"
     },
     {
       "group": "perp",
-      "coin": "BCH",
-      "symbol": "BCH",
-      "name": "BCH"
+      "coin": "WLFI",
+      "symbol": "WLFI",
+      "name": "WLFI"
     },
     {
       "group": "perp",
@@ -254,9 +248,9 @@
     },
     {
       "group": "perp",
-      "coin": "kLUNC",
-      "symbol": "kLUNC",
-      "name": "kLUNC"
+      "coin": "BCH",
+      "symbol": "BCH",
+      "name": "BCH"
     },
     {
       "group": "perp",
@@ -278,9 +272,21 @@
     },
     {
       "group": "perp",
+      "coin": "AERO",
+      "symbol": "AERO",
+      "name": "AERO"
+    },
+    {
+      "group": "perp",
       "coin": "VIRTUAL",
       "symbol": "VIRTUAL",
       "name": "VIRTUAL"
+    },
+    {
+      "group": "perp",
+      "coin": "KAITO",
+      "symbol": "KAITO",
+      "name": "KAITO"
     },
     {
       "group": "perp",
@@ -290,15 +296,9 @@
     },
     {
       "group": "perp",
-      "coin": "FET",
-      "symbol": "FET",
-      "name": "FET"
-    },
-    {
-      "group": "perp",
-      "coin": "AERO",
-      "symbol": "AERO",
-      "name": "AERO"
+      "coin": "INJ",
+      "symbol": "INJ",
+      "name": "INJ"
     }
   ]
 }
