@@ -80,21 +80,15 @@
     },
     {
       "group": "perp",
-      "coin": "kPEPE",
-      "symbol": "kPEPE",
-      "name": "kPEPE"
-    },
-    {
-      "group": "perp",
       "coin": "AAVE",
       "symbol": "AAVE",
       "name": "AAVE"
     },
     {
       "group": "perp",
-      "coin": "UNI",
-      "symbol": "UNI",
-      "name": "UNI"
+      "coin": "kPEPE",
+      "symbol": "kPEPE",
+      "name": "kPEPE"
     },
     {
       "group": "perp",
@@ -104,15 +98,21 @@
     },
     {
       "group": "perp",
-      "coin": "LINK",
-      "symbol": "LINK",
-      "name": "LINK"
+      "coin": "UNI",
+      "symbol": "UNI",
+      "name": "UNI"
     },
     {
       "group": "perp",
       "coin": "XPL",
       "symbol": "XPL",
       "name": "XPL"
+    },
+    {
+      "group": "perp",
+      "coin": "LINK",
+      "symbol": "LINK",
+      "name": "LINK"
     },
     {
       "group": "perp",
@@ -212,6 +212,12 @@
     },
     {
       "group": "perp",
+      "coin": "PENGU",
+      "symbol": "PENGU",
+      "name": "PENGU"
+    },
+    {
+      "group": "perp",
       "coin": "XLM",
       "symbol": "XLM",
       "name": "XLM"
@@ -224,9 +230,9 @@
     },
     {
       "group": "perp",
-      "coin": "PENGU",
-      "symbol": "PENGU",
-      "name": "PENGU"
+      "coin": "AERO",
+      "symbol": "AERO",
+      "name": "AERO"
     },
     {
       "group": "perp",
@@ -236,21 +242,9 @@
     },
     {
       "group": "perp",
-      "coin": "AERO",
-      "symbol": "AERO",
-      "name": "AERO"
-    },
-    {
-      "group": "perp",
       "coin": "LTC",
       "symbol": "LTC",
       "name": "LTC"
-    },
-    {
-      "group": "perp",
-      "coin": "TIA",
-      "symbol": "TIA",
-      "name": "TIA"
     },
     {
       "group": "perp",
@@ -260,21 +254,33 @@
     },
     {
       "group": "perp",
+      "coin": "VIRTUAL",
+      "symbol": "VIRTUAL",
+      "name": "VIRTUAL"
+    },
+    {
+      "group": "perp",
       "coin": "CHIP",
       "symbol": "CHIP",
       "name": "CHIP"
     },
     {
       "group": "perp",
-      "coin": "KAITO",
-      "symbol": "KAITO",
-      "name": "KAITO"
+      "coin": "TIA",
+      "symbol": "TIA",
+      "name": "TIA"
     },
     {
       "group": "perp",
       "coin": "FET",
       "symbol": "FET",
       "name": "FET"
+    },
+    {
+      "group": "perp",
+      "coin": "KAITO",
+      "symbol": "KAITO",
+      "name": "KAITO"
     },
     {
       "group": "perp",
@@ -290,15 +296,9 @@
     },
     {
       "group": "perp",
-      "coin": "VIRTUAL",
-      "symbol": "VIRTUAL",
-      "name": "VIRTUAL"
-    },
-    {
-      "group": "perp",
-      "coin": "BCH",
-      "symbol": "BCH",
-      "name": "BCH"
+      "coin": "STX",
+      "symbol": "STX",
+      "name": "STX"
     }
   ]
 }
