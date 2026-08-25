@@ -62,6 +62,12 @@
     },
     {
       "group": "perp",
+      "coin": "DOGE",
+      "symbol": "DOGE",
+      "name": "DOGE"
+    },
+    {
+      "group": "perp",
       "coin": "NEAR",
       "symbol": "NEAR",
       "name": "NEAR"
@@ -74,21 +80,15 @@
     },
     {
       "group": "perp",
-      "coin": "DOGE",
-      "symbol": "DOGE",
-      "name": "DOGE"
+      "coin": "FARTCOIN",
+      "symbol": "FARTCOIN",
+      "name": "FARTCOIN"
     },
     {
       "group": "perp",
       "coin": "AAVE",
       "symbol": "AAVE",
       "name": "AAVE"
-    },
-    {
-      "group": "perp",
-      "coin": "FARTCOIN",
-      "symbol": "FARTCOIN",
-      "name": "FARTCOIN"
     },
     {
       "group": "perp",
@@ -107,12 +107,6 @@
       "coin": "XPL",
       "symbol": "XPL",
       "name": "XPL"
-    },
-    {
-      "group": "perp",
-      "coin": "TAO",
-      "symbol": "TAO",
-      "name": "TAO"
     },
     {
       "group": "perp",
@@ -140,27 +134,15 @@
     },
     {
       "group": "perp",
+      "coin": "TAO",
+      "symbol": "TAO",
+      "name": "TAO"
+    },
+    {
+      "group": "perp",
       "coin": "ASTER",
       "symbol": "ASTER",
       "name": "ASTER"
-    },
-    {
-      "group": "perp",
-      "coin": "PENGU",
-      "symbol": "PENGU",
-      "name": "PENGU"
-    },
-    {
-      "group": "perp",
-      "coin": "SUI",
-      "symbol": "SUI",
-      "name": "SUI"
-    },
-    {
-      "group": "perp",
-      "coin": "PURR",
-      "symbol": "PURR",
-      "name": "PURR"
     },
     {
       "group": "perp",
@@ -176,15 +158,33 @@
     },
     {
       "group": "perp",
-      "coin": "BNB",
-      "symbol": "BNB",
-      "name": "BNB"
+      "coin": "SUI",
+      "symbol": "SUI",
+      "name": "SUI"
+    },
+    {
+      "group": "perp",
+      "coin": "PENGU",
+      "symbol": "PENGU",
+      "name": "PENGU"
     },
     {
       "group": "perp",
       "coin": "CRV",
       "symbol": "CRV",
       "name": "CRV"
+    },
+    {
+      "group": "perp",
+      "coin": "PURR",
+      "symbol": "PURR",
+      "name": "PURR"
+    },
+    {
+      "group": "perp",
+      "coin": "BNB",
+      "symbol": "BNB",
+      "name": "BNB"
     },
     {
       "group": "perp",
@@ -272,15 +272,15 @@
     },
     {
       "group": "perp",
-      "coin": "APT",
-      "symbol": "APT",
-      "name": "APT"
+      "coin": "TRX",
+      "symbol": "TRX",
+      "name": "TRX"
     },
     {
       "group": "perp",
-      "coin": "GRASS",
-      "symbol": "GRASS",
-      "name": "GRASS"
+      "coin": "STX",
+      "symbol": "STX",
+      "name": "STX"
     },
     {
       "group": "perp",
@@ -290,15 +290,15 @@
     },
     {
       "group": "perp",
-      "coin": "MORPHO",
-      "symbol": "MORPHO",
-      "name": "MORPHO"
+      "coin": "PENDLE",
+      "symbol": "PENDLE",
+      "name": "PENDLE"
     },
     {
       "group": "perp",
-      "coin": "TRX",
-      "symbol": "TRX",
-      "name": "TRX"
+      "coin": "kBONK",
+      "symbol": "kBONK",
+      "name": "kBONK"
     }
   ]
 }
