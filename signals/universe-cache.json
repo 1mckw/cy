@@ -50,15 +50,21 @@
     },
     {
       "group": "perp",
+      "coin": "ZRO",
+      "symbol": "ZRO",
+      "name": "ZRO"
+    },
+    {
+      "group": "perp",
       "coin": "LIT",
       "symbol": "LIT",
       "name": "LIT"
     },
     {
       "group": "perp",
-      "coin": "ZRO",
-      "symbol": "ZRO",
-      "name": "ZRO"
+      "coin": "FARTCOIN",
+      "symbol": "FARTCOIN",
+      "name": "FARTCOIN"
     },
     {
       "group": "perp",
@@ -86,12 +92,6 @@
     },
     {
       "group": "perp",
-      "coin": "FARTCOIN",
-      "symbol": "FARTCOIN",
-      "name": "FARTCOIN"
-    },
-    {
-      "group": "perp",
       "coin": "ENA",
       "symbol": "ENA",
       "name": "ENA"
@@ -116,9 +116,9 @@
     },
     {
       "group": "perp",
-      "coin": "kPEPE",
-      "symbol": "kPEPE",
-      "name": "kPEPE"
+      "coin": "TAO",
+      "symbol": "TAO",
+      "name": "TAO"
     },
     {
       "group": "perp",
@@ -128,15 +128,15 @@
     },
     {
       "group": "perp",
-      "coin": "ADA",
-      "symbol": "ADA",
-      "name": "ADA"
+      "coin": "kPEPE",
+      "symbol": "kPEPE",
+      "name": "kPEPE"
     },
     {
       "group": "perp",
-      "coin": "TAO",
-      "symbol": "TAO",
-      "name": "TAO"
+      "coin": "ADA",
+      "symbol": "ADA",
+      "name": "ADA"
     },
     {
       "group": "perp",
@@ -158,21 +158,21 @@
     },
     {
       "group": "perp",
-      "coin": "ASTER",
-      "symbol": "ASTER",
-      "name": "ASTER"
-    },
-    {
-      "group": "perp",
       "coin": "VVV",
       "symbol": "VVV",
       "name": "VVV"
     },
     {
       "group": "perp",
-      "coin": "PENGU",
-      "symbol": "PENGU",
-      "name": "PENGU"
+      "coin": "ASTER",
+      "symbol": "ASTER",
+      "name": "ASTER"
+    },
+    {
+      "group": "perp",
+      "coin": "SPX",
+      "symbol": "SPX",
+      "name": "SPX"
     },
     {
       "group": "perp",
@@ -182,15 +182,15 @@
     },
     {
       "group": "perp",
-      "coin": "ETHFI",
-      "symbol": "ETHFI",
-      "name": "ETHFI"
+      "coin": "PENGU",
+      "symbol": "PENGU",
+      "name": "PENGU"
     },
     {
       "group": "perp",
-      "coin": "CRV",
-      "symbol": "CRV",
-      "name": "CRV"
+      "coin": "ETHFI",
+      "symbol": "ETHFI",
+      "name": "ETHFI"
     },
     {
       "group": "perp",
@@ -200,9 +200,9 @@
     },
     {
       "group": "perp",
-      "coin": "SPX",
-      "symbol": "SPX",
-      "name": "SPX"
+      "coin": "CRV",
+      "symbol": "CRV",
+      "name": "CRV"
     },
     {
       "group": "perp",
@@ -218,9 +218,9 @@
     },
     {
       "group": "perp",
-      "coin": "AVAX",
-      "symbol": "AVAX",
-      "name": "AVAX"
+      "coin": "TRX",
+      "symbol": "TRX",
+      "name": "TRX"
     },
     {
       "group": "perp",
@@ -230,9 +230,9 @@
     },
     {
       "group": "perp",
-      "coin": "TRX",
-      "symbol": "TRX",
-      "name": "TRX"
+      "coin": "AVAX",
+      "symbol": "AVAX",
+      "name": "AVAX"
     },
     {
       "group": "perp",
@@ -242,15 +242,15 @@
     },
     {
       "group": "perp",
-      "coin": "LTC",
-      "symbol": "LTC",
-      "name": "LTC"
-    },
-    {
-      "group": "perp",
       "coin": "WLFI",
       "symbol": "WLFI",
       "name": "WLFI"
+    },
+    {
+      "group": "perp",
+      "coin": "LTC",
+      "symbol": "LTC",
+      "name": "LTC"
     },
     {
       "group": "perp",
@@ -272,21 +272,21 @@
     },
     {
       "group": "perp",
-      "coin": "VIRTUAL",
-      "symbol": "VIRTUAL",
-      "name": "VIRTUAL"
-    },
-    {
-      "group": "perp",
       "coin": "JUP",
       "symbol": "JUP",
       "name": "JUP"
     },
     {
       "group": "perp",
-      "coin": "STX",
-      "symbol": "STX",
-      "name": "STX"
+      "coin": "VIRTUAL",
+      "symbol": "VIRTUAL",
+      "name": "VIRTUAL"
+    },
+    {
+      "group": "perp",
+      "coin": "LDO",
+      "symbol": "LDO",
+      "name": "LDO"
     },
     {
       "group": "perp",
@@ -296,9 +296,9 @@
     },
     {
       "group": "perp",
-      "coin": "LDO",
-      "symbol": "LDO",
-      "name": "LDO"
+      "coin": "STX",
+      "symbol": "STX",
+      "name": "STX"
     }
   ]
 }
