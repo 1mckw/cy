@@ -38,15 +38,15 @@
     },
     {
       "group": "perp",
-      "coin": "PUMP",
-      "symbol": "PUMP",
-      "name": "PUMP"
-    },
-    {
-      "group": "perp",
       "coin": "XRP",
       "symbol": "XRP",
       "name": "XRP"
+    },
+    {
+      "group": "perp",
+      "coin": "PUMP",
+      "symbol": "PUMP",
+      "name": "PUMP"
     },
     {
       "group": "perp",
@@ -74,6 +74,12 @@
     },
     {
       "group": "perp",
+      "coin": "CASHCAT",
+      "symbol": "CASHCAT",
+      "name": "CASHCAT"
+    },
+    {
+      "group": "perp",
       "coin": "ENA",
       "symbol": "ENA",
       "name": "ENA"
@@ -83,12 +89,6 @@
       "coin": "XMR",
       "symbol": "XMR",
       "name": "XMR"
-    },
-    {
-      "group": "perp",
-      "coin": "CASHCAT",
-      "symbol": "CASHCAT",
-      "name": "CASHCAT"
     },
     {
       "group": "perp",
@@ -110,27 +110,15 @@
     },
     {
       "group": "perp",
-      "coin": "TRUMP",
-      "symbol": "TRUMP",
-      "name": "TRUMP"
-    },
-    {
-      "group": "perp",
-      "coin": "AAVE",
-      "symbol": "AAVE",
-      "name": "AAVE"
-    },
-    {
-      "group": "perp",
-      "coin": "SKR",
-      "symbol": "SKR",
-      "name": "SKR"
-    },
-    {
-      "group": "perp",
       "coin": "LINK",
       "symbol": "LINK",
       "name": "LINK"
+    },
+    {
+      "group": "perp",
+      "coin": "TRUMP",
+      "symbol": "TRUMP",
+      "name": "TRUMP"
     },
     {
       "group": "perp",
@@ -140,9 +128,21 @@
     },
     {
       "group": "perp",
+      "coin": "AAVE",
+      "symbol": "AAVE",
+      "name": "AAVE"
+    },
+    {
+      "group": "perp",
       "coin": "FARTCOIN",
       "symbol": "FARTCOIN",
       "name": "FARTCOIN"
+    },
+    {
+      "group": "perp",
+      "coin": "SKR",
+      "symbol": "SKR",
+      "name": "SKR"
     },
     {
       "group": "perp",
@@ -170,6 +170,12 @@
     },
     {
       "group": "perp",
+      "coin": "CHIP",
+      "symbol": "CHIP",
+      "name": "CHIP"
+    },
+    {
+      "group": "perp",
       "coin": "VVV",
       "symbol": "VVV",
       "name": "VVV"
@@ -179,12 +185,6 @@
       "coin": "WLD",
       "symbol": "WLD",
       "name": "WLD"
-    },
-    {
-      "group": "perp",
-      "coin": "CHIP",
-      "symbol": "CHIP",
-      "name": "CHIP"
     },
     {
       "group": "perp",
@@ -212,27 +212,27 @@
     },
     {
       "group": "perp",
-      "coin": "ETHFI",
-      "symbol": "ETHFI",
-      "name": "ETHFI"
-    },
-    {
-      "group": "perp",
       "coin": "ONDO",
       "symbol": "ONDO",
       "name": "ONDO"
     },
     {
       "group": "perp",
-      "coin": "MON",
-      "symbol": "MON",
-      "name": "MON"
+      "coin": "ETHFI",
+      "symbol": "ETHFI",
+      "name": "ETHFI"
     },
     {
       "group": "perp",
       "coin": "JTO",
       "symbol": "JTO",
       "name": "JTO"
+    },
+    {
+      "group": "perp",
+      "coin": "MON",
+      "symbol": "MON",
+      "name": "MON"
     },
     {
       "group": "perp",
@@ -248,12 +248,6 @@
     },
     {
       "group": "perp",
-      "coin": "0G",
-      "symbol": "0G",
-      "name": "0G"
-    },
-    {
-      "group": "perp",
       "coin": "PENGU",
       "symbol": "PENGU",
       "name": "PENGU"
@@ -266,21 +260,33 @@
     },
     {
       "group": "perp",
-      "coin": "INJ",
-      "symbol": "INJ",
-      "name": "INJ"
-    },
-    {
-      "group": "perp",
       "coin": "ACE",
       "symbol": "ACE",
       "name": "ACE"
     },
     {
       "group": "perp",
+      "coin": "INJ",
+      "symbol": "INJ",
+      "name": "INJ"
+    },
+    {
+      "group": "perp",
+      "coin": "0G",
+      "symbol": "0G",
+      "name": "0G"
+    },
+    {
+      "group": "perp",
       "coin": "PAXG",
       "symbol": "PAXG",
       "name": "PAXG"
+    },
+    {
+      "group": "perp",
+      "coin": "FIL",
+      "symbol": "FIL",
+      "name": "FIL"
     },
     {
       "group": "perp",
@@ -293,12 +299,6 @@
       "coin": "OP",
       "symbol": "OP",
       "name": "OP"
-    },
-    {
-      "group": "perp",
-      "coin": "FIL",
-      "symbol": "FIL",
-      "name": "FIL"
     }
   ]
 }
