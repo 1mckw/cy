@@ -68,9 +68,9 @@
     },
     {
       "group": "perp",
-      "coin": "UNI",
-      "symbol": "UNI",
-      "name": "UNI"
+      "coin": "ETHFI",
+      "symbol": "ETHFI",
+      "name": "ETHFI"
     },
     {
       "group": "perp",
@@ -80,9 +80,9 @@
     },
     {
       "group": "perp",
-      "coin": "ETHFI",
-      "symbol": "ETHFI",
-      "name": "ETHFI"
+      "coin": "UNI",
+      "symbol": "UNI",
+      "name": "UNI"
     },
     {
       "group": "perp",
@@ -92,9 +92,9 @@
     },
     {
       "group": "perp",
-      "coin": "ARB",
-      "symbol": "ARB",
-      "name": "ARB"
+      "coin": "CASHCAT",
+      "symbol": "CASHCAT",
+      "name": "CASHCAT"
     },
     {
       "group": "perp",
@@ -104,21 +104,15 @@
     },
     {
       "group": "perp",
-      "coin": "CASHCAT",
-      "symbol": "CASHCAT",
-      "name": "CASHCAT"
-    },
-    {
-      "group": "perp",
       "coin": "BNB",
       "symbol": "BNB",
       "name": "BNB"
     },
     {
       "group": "perp",
-      "coin": "WLD",
-      "symbol": "WLD",
-      "name": "WLD"
+      "coin": "ARB",
+      "symbol": "ARB",
+      "name": "ARB"
     },
     {
       "group": "perp",
@@ -140,21 +134,33 @@
     },
     {
       "group": "perp",
+      "coin": "WLD",
+      "symbol": "WLD",
+      "name": "WLD"
+    },
+    {
+      "group": "perp",
       "coin": "CHIP",
       "symbol": "CHIP",
       "name": "CHIP"
     },
     {
       "group": "perp",
-      "coin": "CRV",
-      "symbol": "CRV",
-      "name": "CRV"
-    },
-    {
-      "group": "perp",
       "coin": "SUI",
       "symbol": "SUI",
       "name": "SUI"
+    },
+    {
+      "group": "perp",
+      "coin": "LINK",
+      "symbol": "LINK",
+      "name": "LINK"
+    },
+    {
+      "group": "perp",
+      "coin": "CRV",
+      "symbol": "CRV",
+      "name": "CRV"
     },
     {
       "group": "perp",
@@ -170,21 +176,15 @@
     },
     {
       "group": "perp",
-      "coin": "TRUMP",
-      "symbol": "TRUMP",
-      "name": "TRUMP"
-    },
-    {
-      "group": "perp",
-      "coin": "LINK",
-      "symbol": "LINK",
-      "name": "LINK"
-    },
-    {
-      "group": "perp",
       "coin": "MON",
       "symbol": "MON",
       "name": "MON"
+    },
+    {
+      "group": "perp",
+      "coin": "TRUMP",
+      "symbol": "TRUMP",
+      "name": "TRUMP"
     },
     {
       "group": "perp",
@@ -212,75 +212,9 @@
     },
     {
       "group": "perp",
-      "coin": "DASH",
-      "symbol": "DASH",
-      "name": "DASH"
-    },
-    {
-      "group": "perp",
-      "coin": "ASTER",
-      "symbol": "ASTER",
-      "name": "ASTER"
-    },
-    {
-      "group": "perp",
       "coin": "AVAX",
       "symbol": "AVAX",
       "name": "AVAX"
-    },
-    {
-      "group": "perp",
-      "coin": "VIRTUAL",
-      "symbol": "VIRTUAL",
-      "name": "VIRTUAL"
-    },
-    {
-      "group": "perp",
-      "coin": "PENGU",
-      "symbol": "PENGU",
-      "name": "PENGU"
-    },
-    {
-      "group": "perp",
-      "coin": "MET",
-      "symbol": "MET",
-      "name": "MET"
-    },
-    {
-      "group": "perp",
-      "coin": "BCH",
-      "symbol": "BCH",
-      "name": "BCH"
-    },
-    {
-      "group": "perp",
-      "coin": "LTC",
-      "symbol": "LTC",
-      "name": "LTC"
-    },
-    {
-      "group": "perp",
-      "coin": "DOT",
-      "symbol": "DOT",
-      "name": "DOT"
-    },
-    {
-      "group": "perp",
-      "coin": "AERO",
-      "symbol": "AERO",
-      "name": "AERO"
-    },
-    {
-      "group": "perp",
-      "coin": "TRX",
-      "symbol": "TRX",
-      "name": "TRX"
-    },
-    {
-      "group": "perp",
-      "coin": "JUP",
-      "symbol": "JUP",
-      "name": "JUP"
     },
     {
       "group": "perp",
@@ -290,15 +224,81 @@
     },
     {
       "group": "perp",
-      "coin": "APT",
-      "symbol": "APT",
-      "name": "APT"
+      "coin": "LTC",
+      "symbol": "LTC",
+      "name": "LTC"
+    },
+    {
+      "group": "perp",
+      "coin": "ASTER",
+      "symbol": "ASTER",
+      "name": "ASTER"
+    },
+    {
+      "group": "perp",
+      "coin": "VIRTUAL",
+      "symbol": "VIRTUAL",
+      "name": "VIRTUAL"
+    },
+    {
+      "group": "perp",
+      "coin": "DASH",
+      "symbol": "DASH",
+      "name": "DASH"
+    },
+    {
+      "group": "perp",
+      "coin": "BCH",
+      "symbol": "BCH",
+      "name": "BCH"
+    },
+    {
+      "group": "perp",
+      "coin": "DOT",
+      "symbol": "DOT",
+      "name": "DOT"
+    },
+    {
+      "group": "perp",
+      "coin": "TRX",
+      "symbol": "TRX",
+      "name": "TRX"
+    },
+    {
+      "group": "perp",
+      "coin": "PENGU",
+      "symbol": "PENGU",
+      "name": "PENGU"
     },
     {
       "group": "perp",
       "coin": "XLM",
       "symbol": "XLM",
       "name": "XLM"
+    },
+    {
+      "group": "perp",
+      "coin": "APT",
+      "symbol": "APT",
+      "name": "APT"
+    },
+    {
+      "group": "perp",
+      "coin": "AERO",
+      "symbol": "AERO",
+      "name": "AERO"
+    },
+    {
+      "group": "perp",
+      "coin": "SAGA",
+      "symbol": "SAGA",
+      "name": "SAGA"
+    },
+    {
+      "group": "perp",
+      "coin": "STRK",
+      "symbol": "STRK",
+      "name": "STRK"
     }
   ]
 }
