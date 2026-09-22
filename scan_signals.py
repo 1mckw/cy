@@ -96,6 +96,7 @@ TREND_EXCEED_MIN_BARS = tl.TREND_EXCEED_MIN_BARS
 TREND_EXCEED_MAX_BARS = tl.TREND_EXCEED_MAX_BARS
 TREND_EXCEED_BARS = tl.TREND_EXCEED_BARS
 build_auto_trend_lines = tl.build_auto_trend_lines
+build_auto_channels = tl.build_auto_channels
 build_best_touch_line = tl.build_best_touch_line
 check_line_invalidation = tl.check_line_invalidation
 find_trend_touch = tl.find_trend_touch
@@ -237,6 +238,7 @@ def chart_pack_start_index(
     lines: list[dict],
     chart_bars: int,
     best_touch_line: dict | None = None,
+    channels: list[dict] | None = None,
 ) -> int:
     tail = max(0, len(candles) - chart_bars)
     if not candles:
@@ -244,9 +246,28 @@ def chart_pack_start_index(
     starts = [int(line["p1"]["index"]) for line in lines] if lines else []
     if best_touch_line is not None:
         starts.append(int(best_touch_line["p1"]["index"]))
+    for ch in channels or []:
+        for side in ("upper", "lower"):
+            ln = ch.get(side)
+            if ln:
+                starts.append(int(ln["p1"]["index"]))
     if not starts:
         return tail
     return min(tail, min(starts))
+
+
+def _serialize_trend_line(candles: list[dict], line: dict) -> dict:
+    invalidated = check_line_invalidation(candles, line)
+    end_time, end_price = line_end_at_break(candles, line)
+    return {
+        "type": line["type"],
+        "p1": {"time": int(line["p1"]["time"]), "price": float(line["p1"]["price"])},
+        "p2": {"time": int(line["p2"]["time"]), "price": float(line["p2"]["price"])},
+        "endTime": int(end_time),
+        "endPrice": float(end_price),
+        "invalidated": invalidated,
+        "pivot_count": int(line.get("pivot_count") or 0),
+    }
 
 
 def build_chart_pack(
@@ -254,12 +275,16 @@ def build_chart_pack(
     signals: list[dict],
     lines: list[dict],
     chart_bars: int = 800,
+    channels: list[dict] | None = None,
 ) -> dict:
-    best_touch = build_best_touch_line(candles)
-    start_idx = chart_pack_start_index(candles, lines, chart_bars, best_touch)
+    channels = channels or []
+    # If a channel exists, hide standalone upper/lower trend lines on the chart.
+    draw_lines = [] if channels else lines
+    best_touch = None if channels else build_best_touch_line(candles)
+    start_idx = chart_pack_start_index(candles, draw_lines, chart_bars, best_touch, channels)
     trimmed = candles[start_idx:]
     if not trimmed:
-        return {"candles": [], "rays": [], "trend_lines": [], "best_touch_line": None}
+        return {"candles": [], "rays": [], "trend_lines": [], "channels": [], "best_touch_line": None}
 
     t_min = int(trimmed[0]["time"])
     t_max = int(trimmed[-1]["time"])
@@ -279,34 +304,24 @@ def build_chart_pack(
             ray["segments"] = segs
             rays.append(ray)
 
-    trend = []
-    for line in lines:
-        invalidated = check_line_invalidation(candles, line)
-        end_time, end_price = line_end_at_break(candles, line)
-        trend.append(
+    trend = [_serialize_trend_line(candles, line) for line in draw_lines]
+
+    chart_channels = []
+    for ch in channels:
+        upper = _serialize_trend_line(candles, ch["upper"])
+        lower = _serialize_trend_line(candles, ch["lower"])
+        chart_channels.append(
             {
-                "type": line["type"],
-                "p1": {"time": int(line["p1"]["time"]), "price": float(line["p1"]["price"])},
-                "p2": {"time": int(line["p2"]["time"]), "price": float(line["p2"]["price"])},
-                "endTime": int(end_time),
-                "endPrice": float(end_price),
-                "invalidated": invalidated,
-                "pivot_count": int(line.get("pivot_count") or 0),
+                "upper": upper,
+                "lower": lower,
+                "pivot_count": int(ch.get("pivot_count") or 0),
+                "valid_to_current": bool(ch.get("valid_to_current")),
             }
         )
 
     best_touch_line = None
     if best_touch is not None:
-        end_time, end_price = line_end_at_break(candles, best_touch)
-        best_touch_line = {
-            "type": best_touch["type"],
-            "p1": {"time": int(best_touch["p1"]["time"]), "price": float(best_touch["p1"]["price"])},
-            "p2": {"time": int(best_touch["p2"]["time"]), "price": float(best_touch["p2"]["price"])},
-            "endTime": int(end_time),
-            "endPrice": float(end_price),
-            "invalidated": check_line_invalidation(candles, best_touch),
-            "pivot_count": int(best_touch.get("pivot_count") or 0),
-        }
+        best_touch_line = _serialize_trend_line(candles, best_touch)
 
     return {
         "candles": [
@@ -321,6 +336,7 @@ def build_chart_pack(
         ],
         "rays": rays,
         "trend_lines": trend,
+        "channels": chart_channels,
         "best_touch_line": best_touch_line,
     }
 
@@ -360,6 +376,7 @@ def scan_job(job: dict[str, str]) -> dict:
             near_max_bars=near_max,
         )
         lines = build_auto_trend_lines(candles)
+        channels = build_auto_channels(candles, lines)
         trend = collect_trend_touches(candles, lines, fresh_bars)
         exceed = collect_trend_exceeds(candles, lines)
         events = late + near + trend + exceed
@@ -375,7 +392,9 @@ def scan_job(job: dict[str, str]) -> dict:
             "bars": len(candles),
             "events": events,
             "error": None,
-            "chart": build_chart_pack(candles, signals, lines, int(cfg["chart_bars"])),
+            "chart": build_chart_pack(
+                candles, signals, lines, int(cfg["chart_bars"]), channels
+            ),
         }
     except Exception as exc:  # noqa: BLE001
         return {

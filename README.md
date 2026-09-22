@@ -43,6 +43,8 @@ GitHub Pages 每小時掃描 **Hyperliquid 永續合約 24h 交易額 TOP50**，
 
 **趨勢線：** 至少 3 觸點；最多 2 條上升支撐 + 2 條下降阻力；觸點較少者圖上 50% 透明；急漲/跌貫穿 grace 2 根 K。
 
+**通道：** 由斜率近似平行的支撐 + 阻力趨勢線配對而成（紫色）。若偵測到通道，圖表**不再顯示**單獨的上下趨勢線。
+
 ## 首次部署 GitHub Pages
 
 Repo **Settings → Pages → Build and deployment → Source** 選 **GitHub Actions**。

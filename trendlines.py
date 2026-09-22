@@ -364,6 +364,79 @@ def build_auto_trend_lines(candles: list[dict]) -> list[dict]:
     return collect(piv_high, True) + collect(piv_low, False)
 
 
+CHANNEL_SLOPE_TOL = 0.15  # |s1-s2| / max(|s|, eps) ≤ this → parallel
+MAX_CHANNELS = 1
+MIN_CHANNEL_WIDTH_PCT = 0.003  # relative mid-price width
+
+
+def slopes_parallel(s1: float, s2: float, tol: float = CHANNEL_SLOPE_TOL) -> bool:
+    scale = max(abs(s1), abs(s2), 1e-12)
+    return abs(s1 - s2) / scale <= tol
+
+
+def channel_width_ok(upper: dict, lower: dict, candles: list[dict]) -> bool:
+    """Resistance must stay above support over overlap; width not tiny."""
+    i0 = max(upper["p1"]["index"], lower["p1"]["index"])
+    i1 = min(len(candles) - 1, max(upper["p2"]["index"], lower["p2"]["index"]))
+    if i1 <= i0:
+        return False
+    widths: list[float] = []
+    for i in (i0, (i0 + i1) // 2, i1):
+        up = line_price(upper["p1"], upper["slope"], i)
+        lo = line_price(lower["p1"], lower["slope"], i)
+        if up <= lo:
+            return False
+        mid = (up + lo) / 2
+        if not mid:
+            continue
+        widths.append((up - lo) / abs(mid))
+    return bool(widths) and min(widths) >= MIN_CHANNEL_WIDTH_PCT
+
+
+def build_auto_channels(candles: list[dict], lines: list[dict] | None = None) -> list[dict]:
+    """Pair parallel support+resistance trend lines into channels (same rules as TL)."""
+    if lines is None:
+        lines = build_auto_trend_lines(candles)
+    resists = [ln for ln in lines if ln.get("type") == "resistance"]
+    supports = [ln for ln in lines if ln.get("type") == "support"]
+    if not resists or not supports:
+        return []
+
+    candidates: list[dict] = []
+    for up in resists:
+        for lo in supports:
+            if not slopes_parallel(float(up["slope"]), float(lo["slope"])):
+                continue
+            if not channel_width_ok(up, lo, candles):
+                continue
+            # Prefer both still valid; allow one historical like trend-line picking.
+            both_current = bool(up.get("valid_to_current")) and bool(lo.get("valid_to_current"))
+            score_touches = int(up.get("pivot_count") or 0) + int(lo.get("pivot_count") or 0)
+            score_span = min(int(up.get("span") or 0), int(lo.get("span") or 0))
+            candidates.append(
+                {
+                    "upper": up,
+                    "lower": lo,
+                    "slope": (float(up["slope"]) + float(lo["slope"])) / 2,
+                    "pivot_count": score_touches,
+                    "span": score_span,
+                    "valid_to_current": both_current,
+                }
+            )
+
+    if not candidates:
+        return []
+
+    candidates.sort(
+        key=lambda c: (
+            -int(c.get("valid_to_current") or 0),
+            -c["pivot_count"],
+            -c["span"],
+        )
+    )
+    return candidates[:MAX_CHANNELS]
+
+
 def build_best_touch_line(candles: list[dict]) -> dict | None:
     """Single best-touch line in the latest BEST_TOUCH_LOOKBACK bars (broken OK)."""
     start_idx = max(0, len(candles) - BEST_TOUCH_LOOKBACK)

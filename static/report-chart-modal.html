@@ -283,7 +283,25 @@
     });
     series.setData(candles);
 
+    const CHANNEL_COLOR = "rgba(168,85,247,0.9)";
+    const CHANNEL_COLOR_DIM = "rgba(168,85,247,0.35)";
+
+    const channels = pack.channels || [];
+    channels.forEach((ch) => {
+      const sides = [ch.upper, ch.lower].filter(Boolean);
+      sides.forEach((line) => {
+        const highlighted = trendLineMatchesAlert(line, alertInfo);
+        if (highlighted) {
+          drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, HIGHLIGHT_COLOR, HIGHLIGHT_WIDTH);
+        } else {
+          const color = line.invalidated ? CHANNEL_COLOR_DIM : CHANNEL_COLOR;
+          drawSegment(line.p1.time, line.p1.price, line.endTime, line.endPrice, color, 1);
+        }
+      });
+    });
+
     const trendLines = pack.trend_lines || [];
+    // When channels exist, trend_lines are already empty from the scanner.
     const maxTouchByType = {};
     trendLines.forEach((line) => {
       const t = line.type || "";
@@ -339,17 +357,20 @@
     if (!pack) return "無圖表資料";
     const rays = pack.rays || [];
     const lines = pack.trend_lines || [];
+    const channels = pack.channels || [];
     const ar = rays.filter((r) => r.type === "AR");
     const ad = rays.filter((r) => r.type === "AD" || r.type === "DR");
     const arOn = ar.filter((r) => r.active).length;
     const adOn = ad.filter((r) => r.active).length;
     const tlValid = lines.filter((l) => !l.invalidated).length;
+    const chValid = channels.filter((c) => c.valid_to_current).length;
     const bits = [];
     if (ar.length) bits.push(`AR ${arOn}/${ar.length} 有效`);
     else bits.push("AR 無");
     if (ad.length) bits.push(`AD ${adOn}/${ad.length} 有效`);
     else bits.push("AD 無");
-    bits.push(`趨勢線 ${tlValid}/${lines.length}`);
+    if (channels.length) bits.push(`通道 ${chValid}/${channels.length}`);
+    else bits.push(`趨勢線 ${tlValid}/${lines.length}`);
     return bits.join(" · ");
   }
 
@@ -399,10 +420,15 @@
       } else {
         const rayN = pack && pack.rays ? pack.rays.length : 0;
         const tlN = pack && pack.trend_lines ? pack.trend_lines.length : 0;
+        const chN = pack && pack.channels ? pack.channels.length : 0;
         subEl.innerHTML =
           `${escapeHtml(name)} · ${escapeHtml(group)} · ${escapeHtml(typeLabel(type, kind))}` +
           (level ? ` · Level <strong>${escapeHtml(fmtLevel(level))}</strong>` : "") +
-          (pack ? ` · AR/AD ${rayN} · 趨勢線 ${tlN}` : "");
+          (pack
+            ? (chN
+                ? ` · AR/AD ${rayN} · 通道 ${chN}`
+                : ` · AR/AD ${rayN} · 趨勢線 ${tlN}`)
+            : "");
       }
 
       if (pack && pack.candles && pack.candles.length) {
