@@ -14,15 +14,15 @@
     },
     {
       "group": "perp",
-      "coin": "HYPE",
-      "symbol": "HYPE",
-      "name": "HYPE"
-    },
-    {
-      "group": "perp",
       "coin": "ZEC",
       "symbol": "ZEC",
       "name": "ZEC"
+    },
+    {
+      "group": "perp",
+      "coin": "HYPE",
+      "symbol": "HYPE",
+      "name": "HYPE"
     },
     {
       "group": "perp",
@@ -56,9 +56,9 @@
     },
     {
       "group": "perp",
-      "coin": "ZRO",
-      "symbol": "ZRO",
-      "name": "ZRO"
+      "coin": "UNI",
+      "symbol": "UNI",
+      "name": "UNI"
     },
     {
       "group": "perp",
@@ -74,15 +74,9 @@
     },
     {
       "group": "perp",
-      "coin": "MET",
-      "symbol": "MET",
-      "name": "MET"
-    },
-    {
-      "group": "perp",
-      "coin": "PONS",
-      "symbol": "PONS",
-      "name": "PONS"
+      "coin": "WLD",
+      "symbol": "WLD",
+      "name": "WLD"
     },
     {
       "group": "perp",
@@ -92,27 +86,15 @@
     },
     {
       "group": "perp",
-      "coin": "LIT",
-      "symbol": "LIT",
-      "name": "LIT"
+      "coin": "ZRO",
+      "symbol": "ZRO",
+      "name": "ZRO"
     },
     {
       "group": "perp",
-      "coin": "UNI",
-      "symbol": "UNI",
-      "name": "UNI"
-    },
-    {
-      "group": "perp",
-      "coin": "WLD",
-      "symbol": "WLD",
-      "name": "WLD"
-    },
-    {
-      "group": "perp",
-      "coin": "AVAX",
-      "symbol": "AVAX",
-      "name": "AVAX"
+      "coin": "PONS",
+      "symbol": "PONS",
+      "name": "PONS"
     },
     {
       "group": "perp",
@@ -122,15 +104,15 @@
     },
     {
       "group": "perp",
-      "coin": "ADA",
-      "symbol": "ADA",
-      "name": "ADA"
+      "coin": "LIT",
+      "symbol": "LIT",
+      "name": "LIT"
     },
     {
       "group": "perp",
-      "coin": "CRV",
-      "symbol": "CRV",
-      "name": "CRV"
+      "coin": "MET",
+      "symbol": "MET",
+      "name": "MET"
     },
     {
       "group": "perp",
@@ -140,33 +122,9 @@
     },
     {
       "group": "perp",
-      "coin": "MON",
-      "symbol": "MON",
-      "name": "MON"
-    },
-    {
-      "group": "perp",
-      "coin": "JUP",
-      "symbol": "JUP",
-      "name": "JUP"
-    },
-    {
-      "group": "perp",
-      "coin": "AAVE",
-      "symbol": "AAVE",
-      "name": "AAVE"
-    },
-    {
-      "group": "perp",
-      "coin": "LTC",
-      "symbol": "LTC",
-      "name": "LTC"
-    },
-    {
-      "group": "perp",
-      "coin": "XMR",
-      "symbol": "XMR",
-      "name": "XMR"
+      "coin": "ADA",
+      "symbol": "ADA",
+      "name": "ADA"
     },
     {
       "group": "perp",
@@ -176,9 +134,9 @@
     },
     {
       "group": "perp",
-      "coin": "LINK",
-      "symbol": "LINK",
-      "name": "LINK"
+      "coin": "AVAX",
+      "symbol": "AVAX",
+      "name": "AVAX"
     },
     {
       "group": "perp",
@@ -188,45 +146,15 @@
     },
     {
       "group": "perp",
-      "coin": "SAND",
-      "symbol": "SAND",
-      "name": "SAND"
+      "coin": "LTC",
+      "symbol": "LTC",
+      "name": "LTC"
     },
     {
       "group": "perp",
-      "coin": "W",
-      "symbol": "W",
-      "name": "W"
-    },
-    {
-      "group": "perp",
-      "coin": "CASHCAT",
-      "symbol": "CASHCAT",
-      "name": "CASHCAT"
-    },
-    {
-      "group": "perp",
-      "coin": "kPEPE",
-      "symbol": "kPEPE",
-      "name": "kPEPE"
-    },
-    {
-      "group": "perp",
-      "coin": "ARB",
-      "symbol": "ARB",
-      "name": "ARB"
-    },
-    {
-      "group": "perp",
-      "coin": "ALGO",
-      "symbol": "ALGO",
-      "name": "ALGO"
-    },
-    {
-      "group": "perp",
-      "coin": "BNB",
-      "symbol": "BNB",
-      "name": "BNB"
+      "coin": "CRV",
+      "symbol": "CRV",
+      "name": "CRV"
     },
     {
       "group": "perp",
@@ -236,15 +164,69 @@
     },
     {
       "group": "perp",
+      "coin": "AAVE",
+      "symbol": "AAVE",
+      "name": "AAVE"
+    },
+    {
+      "group": "perp",
+      "coin": "kPEPE",
+      "symbol": "kPEPE",
+      "name": "kPEPE"
+    },
+    {
+      "group": "perp",
+      "coin": "JUP",
+      "symbol": "JUP",
+      "name": "JUP"
+    },
+    {
+      "group": "perp",
+      "coin": "XMR",
+      "symbol": "XMR",
+      "name": "XMR"
+    },
+    {
+      "group": "perp",
+      "coin": "LINK",
+      "symbol": "LINK",
+      "name": "LINK"
+    },
+    {
+      "group": "perp",
+      "coin": "ARB",
+      "symbol": "ARB",
+      "name": "ARB"
+    },
+    {
+      "group": "perp",
+      "coin": "BNB",
+      "symbol": "BNB",
+      "name": "BNB"
+    },
+    {
+      "group": "perp",
+      "coin": "MON",
+      "symbol": "MON",
+      "name": "MON"
+    },
+    {
+      "group": "perp",
+      "coin": "W",
+      "symbol": "W",
+      "name": "W"
+    },
+    {
+      "group": "perp",
       "coin": "AERO",
       "symbol": "AERO",
       "name": "AERO"
     },
     {
       "group": "perp",
-      "coin": "GRAM",
-      "symbol": "GRAM",
-      "name": "GRAM"
+      "coin": "CASHCAT",
+      "symbol": "CASHCAT",
+      "name": "CASHCAT"
     },
     {
       "group": "perp",
@@ -254,21 +236,9 @@
     },
     {
       "group": "perp",
-      "coin": "DOT",
-      "symbol": "DOT",
-      "name": "DOT"
-    },
-    {
-      "group": "perp",
-      "coin": "CHIP",
-      "symbol": "CHIP",
-      "name": "CHIP"
-    },
-    {
-      "group": "perp",
-      "coin": "PENGU",
-      "symbol": "PENGU",
-      "name": "PENGU"
+      "coin": "ALGO",
+      "symbol": "ALGO",
+      "name": "ALGO"
     },
     {
       "group": "perp",
@@ -278,15 +248,15 @@
     },
     {
       "group": "perp",
-      "coin": "PENDLE",
-      "symbol": "PENDLE",
-      "name": "PENDLE"
+      "coin": "PENGU",
+      "symbol": "PENGU",
+      "name": "PENGU"
     },
     {
       "group": "perp",
-      "coin": "USELESS",
-      "symbol": "USELESS",
-      "name": "USELESS"
+      "coin": "DOT",
+      "symbol": "DOT",
+      "name": "DOT"
     },
     {
       "group": "perp",
@@ -296,9 +266,39 @@
     },
     {
       "group": "perp",
-      "coin": "ICP",
-      "symbol": "ICP",
-      "name": "ICP"
+      "coin": "GRAM",
+      "symbol": "GRAM",
+      "name": "GRAM"
+    },
+    {
+      "group": "perp",
+      "coin": "FET",
+      "symbol": "FET",
+      "name": "FET"
+    },
+    {
+      "group": "perp",
+      "coin": "CHIP",
+      "symbol": "CHIP",
+      "name": "CHIP"
+    },
+    {
+      "group": "perp",
+      "coin": "TIA",
+      "symbol": "TIA",
+      "name": "TIA"
+    },
+    {
+      "group": "perp",
+      "coin": "ASTER",
+      "symbol": "ASTER",
+      "name": "ASTER"
+    },
+    {
+      "group": "perp",
+      "coin": "INJ",
+      "symbol": "INJ",
+      "name": "INJ"
     }
   ]
 }
